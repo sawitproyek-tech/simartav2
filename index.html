@@ -5,71 +5,43 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>SIMARTA - Sistem Informasi Manajemen Tugas Akhir</title>
   
-  <!-- Tailwind CSS Framework -->
   <script src="https://cdn.tailwindcss.com"></script>
-  <!-- Feather Icons -->
   <script src="https://unpkg.com/feather-icons"></script>
-  <!-- SweetAlert2 CSS & JS -->
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
-  <!-- Firebase SDK (Modular v10) -->
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
     import { 
-      getAuth, 
-      signInWithEmailAndPassword, 
-      createUserWithEmailAndPassword, 
-      sendPasswordResetEmail, 
-      signOut, 
-      onAuthStateChanged 
+      getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword, 
+      sendPasswordResetEmail, signOut, onAuthStateChanged 
     } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
     import { 
-      getFirestore, 
-      collection, 
-      doc, 
-      setDoc, 
-      getDoc, 
-      getDocs, 
-      updateDoc, 
-      deleteDoc, 
-      onSnapshot,
-      writeBatch,
-      runTransaction
+      getFirestore, collection, doc, setDoc, getDoc, getDocs, updateDoc, 
+      deleteDoc, onSnapshot, writeBatch, runTransaction
     } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
-    // Konfigurasi Firebase Anda
     const firebaseConfig = {
-  apiKey: "AIzaSyBQsN2Zd4hKLXGngbVvZVimH6sBc_zr58k",
-  authDomain: "ugalugalan-44fa4.firebaseapp.com",
-  databaseURL: "https://ugalugalan-44fa4-default-rtdb.asia-southeast1.firebasedatabase.app",
-  projectId: "ugalugalan-44fa4",
-  storageBucket: "ugalugalan-44fa4.firebasestorage.app",
-  messagingSenderId: "785339397769",
-  appId: "1:785339397769:web:caa053551e41784c987858",
-  measurementId: "G-NH3TGX21LR"
-};
+      apiKey: "AIzaSyBQsN2Zd4hKLXGngbVvZVimH6sBc_zr58k",
+      authDomain: "ugalugalan-44fa4.firebaseapp.com",
+      databaseURL: "https://ugalugalan-44fa4-default-rtdb.asia-southeast1.firebasedatabase.app",
+      projectId: "ugalugalan-44fa4",
+      storageBucket: "ugalugalan-44fa4.firebasestorage.app",
+      messagingSenderId: "785339397769",
+      appId: "1:785339397769:web:caa053551e41784c987858",
+      measurementId: "G-NH3TGX21LR"
+    };
 
     const app = initializeApp(firebaseConfig);
     const auth = getAuth(app);
     const db = getFirestore(app);
 
-    window.firebaseAuth = auth;
-    window.firebaseDb = db;
-    window.fbSignIn = signInWithEmailAndPassword;
-    window.fbCreateUser = createUserWithEmailAndPassword;
-    window.fbResetPassword = sendPasswordResetEmail;
-    window.fbSignOut = signOut;
-    window.fbOnAuthStateChanged = onAuthStateChanged;
-    window.fbCollection = collection;
-    window.fbDoc = doc;
-    window.fbSetDoc = setDoc;
-    window.fbGetDoc = getDoc;
-    window.fbGetDocs = getDocs;
-    window.fbUpdateDoc = updateDoc;
-    window.fbDeleteDoc = deleteDoc;
-    window.fbOnSnapshot = onSnapshot;
-    window.fbWriteBatch = writeBatch;
-    window.fbRunTransaction = runTransaction;
+    window.firebaseAuth = auth; window.firebaseDb = db;
+    window.fbSignIn = signInWithEmailAndPassword; window.fbCreateUser = createUserWithEmailAndPassword;
+    window.fbResetPassword = sendPasswordResetEmail; window.fbSignOut = signOut;
+    window.fbOnAuthStateChanged = onAuthStateChanged; window.fbCollection = collection;
+    window.fbDoc = doc; window.fbSetDoc = setDoc; window.fbGetDoc = getDoc;
+    window.fbGetDocs = getDocs; window.fbUpdateDoc = updateDoc; window.fbDeleteDoc = deleteDoc;
+    window.fbOnSnapshot = onSnapshot; window.fbWriteBatch = writeBatch; window.fbRunTransaction = runTransaction;
   </script>
 
   <script>
@@ -77,13 +49,8 @@
       theme: {
         extend: {
           colors: {
-            brand: {
-              50: '#e6f7f5', 100: '#cceee9', 200: '#99ddd3', 300: '#66ccbd',
-              400: '#33bbb1', 500: '#00A99D', 600: '#00877e', 700: '#00665f',
-            },
-            kemenkesYellow: {
-              100: '#fff9db', 400: '#ffdb4d', 500: '#FFCC00', 600: '#e6b800', 700: '#b38f00',
-            }
+            brand: { 50: '#e6f7f5', 100: '#cceee9', 200: '#99ddd3', 300: '#66ccbd', 400: '#33bbb1', 500: '#00A99D', 600: '#00877e', 700: '#00665f' },
+            kemenkesYellow: { 100: '#fff9db', 400: '#ffdb4d', 500: '#FFCC00', 600: '#e6b800', 700: '#b38f00' }
           }
         }
       }
@@ -106,7 +73,6 @@
       <p class="text-brand-100 text-sm mb-6 leading-relaxed">
         Platform SIMARTA saat ini sedang dalam mode pemeliharaan untuk persiapan <b>Pemilihan Tema Skripsi</b>. Silakan kembali pada jadwal yang telah ditentukan.
       </p>
-      <!-- Pintu Rahasia Admin -->
       <div onclick="openLoginModal()" class="inline-block bg-white/10 px-4 py-2 rounded-lg border border-white/20 cursor-pointer hover:bg-white/20 transition">
         <span class="text-xs font-bold uppercase tracking-widest text-kemenkesYellow-400">Status: Terkunci / Maintenance</span>
       </div>
@@ -117,73 +83,48 @@
   <div id="view-landing" class="min-h-screen flex flex-col justify-between bg-gradient-to-b from-brand-50 via-white to-brand-50 text-slate-800">
     <header class="max-w-7xl w-full mx-auto px-6 py-6 flex items-center justify-between border-b border-brand-100">
       <div class="flex items-center gap-3">
-        <div class="bg-brand-500 p-2 rounded-xl text-white shadow-md">
-          <i data-feather="shield-check"></i>
-        </div>
+        <div class="bg-brand-500 p-2 rounded-xl text-white shadow-md"><i data-feather="shield-check"></i></div>
         <span class="font-bold text-xl tracking-tight text-brand-700">SIMARTA</span>
       </div>
       <div class="flex items-center gap-3">
-        <button onclick="openPanduanSIMARTA()" class="hover:text-brand-700 text-sm font-bold px-5 transition">
-          Panduan SIMARTA
-        </button>
-        <button onclick="openLoginModal()" class="bg-kemenkesYellow-500 hover:bg-kemenkesYellow-400 text-brand-700 text-sm font-bold px-5 py-2 rounded-lg shadow-md transition">
-          Login SIMARTA
-        </button>
+        <button onclick="openPanduanSIMARTA()" class="hover:text-brand-700 text-sm font-bold px-5 transition">Panduan SIMARTA</button>
+        <button onclick="openLoginModal()" class="bg-kemenkesYellow-500 hover:bg-kemenkesYellow-400 text-brand-700 text-sm font-bold px-5 py-2 rounded-lg shadow-md transition">Login SIMARTA</button>
       </div>
     </header>
 
     <main class="max-w-5xl mx-auto px-6 text-center my-auto py-10">
-      
-      <h1 class="text-4xl md:text-6xl font-extrabold tracking-tight leading-tight text-brand-700">
-        SIMARTA (Sistem Informasi Manajemen Tugas Akhir)
-      </h1>
-      <p class="mt-4 text-slate-600 text-base md:text-lg max-w-2xl mx-auto">
-        Platform untuk pemilihan tema, pengajuan judul, persetujuan admin, pengecekan kemiripan judul, dan monitoring skripsi mahasiswa.
-      </p>
+      <h1 class="text-4xl md:text-6xl font-extrabold tracking-tight leading-tight text-brand-700">SIMARTA (Sistem Informasi Manajemen Tugas Akhir)</h1>
+      <p class="mt-4 text-slate-600 text-base md:text-lg max-w-2xl mx-auto">Platform untuk pemilihan tema, pengajuan judul, persetujuan admin, pengecekan kemiripan judul, dan monitoring skripsi mahasiswa.</p>
 
       <div class="mt-8 max-w-2xl mx-auto">
-        <!--SEARCHBAR UNTUK CARI JUDUL-->
        <form onsubmit="handlePublicSearch(event)" class="relative flex items-center">
-          <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-slate-400">
-            <i data-feather="search" class="w-5 h-5"></i>
-          </div>
-          <input type="text" id="publicSearchInput" required placeholder="Priksa judul..." class="w-full pl-11 pr-32 py-4 rounded-2xl bg-white border border-brand-200 text-slate-800 placeholder-slate-400 text-sm focus:outline-none focus:ring-2 focus:ring-brand-500 shadow-lg transition">
-          <button type="submit" class="absolute right-2 bg-brand-500 hover:bg-brand-600 text-white text-xs font-bold px-5 py-2.5 rounded-xl transition shadow-md flex items-center gap-1.5">
-            <span>Cari Judul</span>
-          </button>
+          <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-slate-400"><i data-feather="search" class="w-5 h-5"></i></div>
+          <input type="text" id="publicSearchInput" required placeholder="Priksa judul (Aman dari Kuota Database)..." class="w-full pl-11 pr-32 py-4 rounded-2xl bg-white border border-brand-200 text-slate-800 placeholder-slate-400 text-sm focus:outline-none focus:ring-2 focus:ring-brand-500 shadow-lg transition">
+          <button type="submit" class="absolute right-2 bg-brand-500 hover:bg-brand-600 text-white text-xs font-bold px-5 py-2.5 rounded-xl transition shadow-md flex items-center gap-1.5"><span>Cari Judul</span></button>
         </form>
       </div>
 
-      <!-- SEKSI HALAMAN HASIL PENCEKAN LANDING PAGE -->
       <div id="publicSearchResultSection" class="mt-8 max-w-3xl mx-auto text-left hidden">
         <div class="bg-white border border-slate-200 rounded-2xl p-6 shadow-xl space-y-4">
           <div class="flex items-center justify-between border-b pb-3">
             <h3 id="searchResultTitle" class="font-bold text-slate-800 text-base">Hasil Pengecekan Repositori</h3>
-            <button onclick="closePublicSearchResult()" class="text-slate-400 hover:text-rose-500 text-xs font-bold flex items-center gap-1">
-              <i data-feather="x" class="w-4 h-4"></i> Tutup
-            </button>
+            <button onclick="closePublicSearchResult()" class="text-slate-400 hover:text-rose-500 text-xs font-bold flex items-center gap-1"><i data-feather="x" class="w-4 h-4"></i> Tutup</button>
           </div>
           <div id="searchResultContent" class="space-y-3"></div>
         </div>
       </div>
     </main>
 
-    <footer class="text-center py-6 text-xs text-slate-500 border-t border-brand-100">
-      &copy; 2026 SIMARTA - Akademik MIORI
-    </footer>
+    <footer class="text-center py-6 text-xs text-slate-500 border-t border-brand-100">&copy; 2026 SIMARTA - Akademik MIORI</footer>
   </div>
 
   <!-- MODAL LOGIN -->
   <div id="loginModal" class="fixed inset-0 bg-slate-900/40 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
     <div class="bg-white rounded-2xl max-w-md w-full p-6 shadow-2xl relative border border-slate-200">
-      <button onclick="closeLoginModal()" class="absolute top-4 right-4 text-slate-400 hover:text-slate-600 p-1">
-        <i data-feather="x" class="w-5 h-5"></i>
-      </button>
+      <button onclick="closeLoginModal()" class="absolute top-4 right-4 text-slate-400 hover:text-slate-600 p-1"><i data-feather="x" class="w-5 h-5"></i></button>
 
       <div class="text-center mb-6">
-        <div class="bg-brand-500 text-white w-12 h-12 rounded-2xl mx-auto flex items-center justify-center shadow-md mb-2">
-          <i data-feather="lock"></i>
-        </div>
+        <div class="bg-brand-500 text-white w-12 h-12 rounded-2xl mx-auto flex items-center justify-center shadow-md mb-2"><i data-feather="lock"></i></div>
         <h3 class="text-xl font-bold text-slate-800">Login Akun SIMARTA</h3>
         <p class="text-xs text-slate-500 mt-1">Masukkan Email dan Password Firebase Anda.</p>
       </div>
@@ -211,9 +152,7 @@
     <aside class="w-64 bg-white border-r border-slate-200 text-slate-700 flex flex-col justify-between p-4 hidden md:flex">
       <div>
         <div class="flex items-center gap-3 px-2 py-4 border-b border-slate-100">
-          <div class="bg-brand-500 p-2 rounded-xl text-white shadow-sm">
-            <i data-feather="shield-check"></i>
-          </div>
+          <div class="bg-brand-500 p-2 rounded-xl text-white shadow-sm"><i data-feather="shield-check"></i></div>
           <div>
             <h1 class="font-bold text-brand-700 text-base leading-tight">SIMARTA</h1>
             <p class="text-[10px] text-slate-500">Sistem Informasi Tugas Akhir</p>
@@ -222,59 +161,27 @@
 
         <div class="mt-4 px-2">
           <label class="text-[10px] uppercase font-bold text-slate-500 tracking-wider">Peran Terhubung:</label>
-          <div id="roleDisplayBadge" class="mt-1 w-full bg-brand-50 text-brand-700 text-xs font-bold rounded-lg p-2 border border-brand-200 text-center">
-            Mahasiswa
-          </div>
+          <div id="roleDisplayBadge" class="mt-1 w-full bg-brand-50 text-brand-700 text-xs font-bold rounded-lg p-2 border border-brand-200 text-center">Mahasiswa</div>
         </div>
 
         <!-- NAV SUPERADMIN -->
         <nav id="navSuperadmin" class="mt-6 space-y-1 hidden">
-          <button onclick="switchPage('page-dashboard-admin')" class="nav-link w-full flex items-center gap-3 px-3 py-2.5 text-slate-600 hover:bg-brand-50 hover:text-brand-700 rounded-lg font-medium text-sm transition">
-            <i data-feather="layout" class="w-4 h-4"></i> Verifikasi Judul
-          </button>
-          <button onclick="switchPage('page-manage-users')" class="nav-link w-full flex items-center gap-3 px-3 py-2.5 text-slate-600 hover:bg-brand-50 hover:text-brand-700 rounded-lg font-medium text-sm transition">
-            <i data-feather="user-plus" class="w-4 h-4"></i> Manajemen User
-          </button>
-          <button onclick="switchPage('page-confirm-topics')" class="nav-link w-full flex items-center gap-3 px-3 py-2.5 text-slate-600 hover:bg-brand-50 hover:text-brand-700 rounded-lg font-medium text-sm transition">
-            <i data-feather="check-square" class="w-4 h-4"></i> Rekap Pilihan Tema
-          </button>
-          <button onclick="switchPage('page-manage-topics')" class="nav-link w-full flex items-center gap-3 px-3 py-2.5 text-slate-600 hover:bg-brand-50 hover:text-brand-700 rounded-lg font-medium text-sm transition">
-            <i data-feather="layers" class="w-4 h-4"></i> Kelola Tema & Kuota
-          </button>
-          <button onclick="switchPage('page-manage-lecturers')" class="nav-link w-full flex items-center gap-3 px-3 py-2.5 text-slate-600 hover:bg-brand-50 hover:text-brand-700 rounded-lg font-medium text-sm transition">
-            <i data-feather="user-check" class="w-4 h-4"></i> Master Data Dosen
-          </button>
-          <button onclick="switchPage('page-assign-advisors')" class="nav-link w-full flex items-center gap-3 px-3 py-2.5 text-slate-600 hover:bg-brand-50 hover:text-brand-700 rounded-lg font-medium text-sm transition">
-            <i data-feather="users" class="w-4 h-4"></i> Ploting Dosen PA
-          </button>
-          <button onclick="switchPage('page-similarity-check')" class="nav-link w-full flex items-center gap-3 px-3 py-2.5 text-slate-600 hover:bg-brand-50 hover:text-brand-700 rounded-lg font-medium text-sm transition">
-            <i data-feather="search" class="w-4 h-4"></i> Live Similarity
-          </button>
-          <button onclick="switchPage('page-repository')" class="nav-link w-full flex items-center gap-3 px-3 py-2.5 text-slate-600 hover:bg-brand-50 hover:text-brand-700 rounded-lg font-medium text-sm transition">
-            <i data-feather="database" class="w-4 h-4"></i> Master Repositori
-          </button>
+          <button onclick="switchPage('page-dashboard-admin')" class="nav-link w-full flex items-center gap-3 px-3 py-2.5 text-slate-600 hover:bg-brand-50 hover:text-brand-700 rounded-lg font-medium text-sm transition"><i data-feather="layout" class="w-4 h-4"></i> Verifikasi Judul</button>
+          <button onclick="switchPage('page-manage-users')" class="nav-link w-full flex items-center gap-3 px-3 py-2.5 text-slate-600 hover:bg-brand-50 hover:text-brand-700 rounded-lg font-medium text-sm transition"><i data-feather="user-plus" class="w-4 h-4"></i> Manajemen User</button>
+          <button onclick="switchPage('page-confirm-topics')" class="nav-link w-full flex items-center gap-3 px-3 py-2.5 text-slate-600 hover:bg-brand-50 hover:text-brand-700 rounded-lg font-medium text-sm transition"><i data-feather="check-square" class="w-4 h-4"></i> Rekap Pilihan Tema</button>
+          <button onclick="switchPage('page-manage-topics')" class="nav-link w-full flex items-center gap-3 px-3 py-2.5 text-slate-600 hover:bg-brand-50 hover:text-brand-700 rounded-lg font-medium text-sm transition"><i data-feather="layers" class="w-4 h-4"></i> Kelola Tema & Kuota</button>
+          <button onclick="switchPage('page-manage-lecturers')" class="nav-link w-full flex items-center gap-3 px-3 py-2.5 text-slate-600 hover:bg-brand-50 hover:text-brand-700 rounded-lg font-medium text-sm transition"><i data-feather="user-check" class="w-4 h-4"></i> Master Data Dosen</button>
+          <button onclick="switchPage('page-assign-advisors')" class="nav-link w-full flex items-center gap-3 px-3 py-2.5 text-slate-600 hover:bg-brand-50 hover:text-brand-700 rounded-lg font-medium text-sm transition"><i data-feather="users" class="w-4 h-4"></i> Ploting Dosen PA</button>
+          <button onclick="switchPage('page-similarity-check')" class="nav-link w-full flex items-center gap-3 px-3 py-2.5 text-slate-600 hover:bg-brand-50 hover:text-brand-700 rounded-lg font-medium text-sm transition"><i data-feather="search" class="w-4 h-4"></i> Live Similarity</button>
+          <button onclick="switchPage('page-repository')" class="nav-link w-full flex items-center gap-3 px-3 py-2.5 text-slate-600 hover:bg-brand-50 hover:text-brand-700 rounded-lg font-medium text-sm transition"><i data-feather="database" class="w-4 h-4"></i> Master Repositori</button>
         </nav>
 
         <!-- NAV USER / MAHASISWA -->
         <nav id="navUser" class="mt-6 space-y-1">
-          <button onclick="switchPage('page-dashboard-user')" class="nav-link w-full flex items-center gap-3 px-3 py-2.5 bg-brand-500 text-white rounded-lg font-medium text-sm transition shadow-sm">
-            <i data-feather="home" class="w-4 h-4"></i> Dashboard Saya
-          </button>
-          <button onclick="switchPage('page-select-topic')" class="nav-link w-full flex items-center gap-3 px-3 py-2.5 text-slate-600 hover:bg-brand-50 hover:text-brand-700 rounded-lg font-medium text-sm transition">
-            <i data-feather="check-square" class="w-4 h-4"></i> Pilih Tema & Dosen
-          </button>
-          <!-- TOMBOL AKTIF -->
-          <button id="navBtnSubmitTitleActive" onclick="switchPage('page-submit-title')" class="nav-link w-full flex items-center gap-3 px-3 py-2.5 text-slate-600 hover:bg-brand-50 hover:text-brand-700 rounded-lg font-medium text-sm transition hidden">
-            <i data-feather="file-plus" class="w-4 h-4"></i> Ajukan Judul Baru
-          </button>
-          
-          <!-- TOMBOL TERKUNCI -->
-          <button id="navBtnSubmitTitleLocked" disabled class="w-full flex items-center justify-between px-3 py-2.5 text-slate-400 bg-slate-100 rounded-lg font-medium text-sm cursor-not-allowed opacity-60" title="Tahap pengajuan belum dibuka">
-            <div class="flex items-center gap-3">
-              <i data-feather="file-plus" class="w-4 h-4"></i> Ajukan Judul Baru
-            </div>
-            <i data-feather="lock" class="w-3.5 h-3.5"></i>
-          </button>
+          <button onclick="switchPage('page-dashboard-user')" class="nav-link w-full flex items-center gap-3 px-3 py-2.5 bg-brand-500 text-white rounded-lg font-medium text-sm transition shadow-sm"><i data-feather="home" class="w-4 h-4"></i> Dashboard Saya</button>
+          <button onclick="switchPage('page-select-topic')" class="nav-link w-full flex items-center gap-3 px-3 py-2.5 text-slate-600 hover:bg-brand-50 hover:text-brand-700 rounded-lg font-medium text-sm transition"><i data-feather="check-square" class="w-4 h-4"></i> Pilih Tema & Dosen</button>
+          <button id="navBtnSubmitTitleActive" onclick="switchPage('page-submit-title')" class="nav-link w-full flex items-center gap-3 px-3 py-2.5 text-slate-600 hover:bg-brand-50 hover:text-brand-700 rounded-lg font-medium text-sm transition hidden"><i data-feather="file-plus" class="w-4 h-4"></i> Ajukan Judul Baru</button>
+          <button id="navBtnSubmitTitleLocked" disabled class="w-full flex items-center justify-between px-3 py-2.5 text-slate-400 bg-slate-100 rounded-lg font-medium text-sm cursor-not-allowed opacity-60" title="Tahap pengajuan belum dibuka"><div class="flex items-center gap-3"><i data-feather="file-plus" class="w-4 h-4"></i> Ajukan Judul Baru</div><i data-feather="lock" class="w-3.5 h-3.5"></i></button>
         </nav>
       </div>
 
@@ -286,9 +193,7 @@
             <p id="userRoleBadge" class="text-[10px] text-brand-600 font-medium">User</p>
           </div>
         </div>
-        <button onclick="logout()" title="Logout" class="text-slate-400 hover:text-rose-500 transition">
-          <i data-feather="log-out" class="w-4 h-4"></i>
-        </button>
+        <button onclick="logout()" title="Logout" class="text-slate-400 hover:text-rose-500 transition"><i data-feather="log-out" class="w-4 h-4"></i></button>
       </div>
     </aside>
 
@@ -298,28 +203,28 @@
       <!-- NAVBAR KHUSUS PONSEL -->
       <div class="bg-white border-b border-slate-200 px-4 py-3 flex md:hidden items-center justify-between shadow-sm sticky top-0 z-30">
         <div class="flex items-center gap-2">
-          <div class="bg-brand-500 p-1.5 rounded-lg text-white">
-            <i data-feather="shield-check" class="w-4 h-4"></i>
-          </div>
+          <div class="bg-brand-500 p-1.5 rounded-lg text-white"><i data-feather="shield-check" class="w-4 h-4"></i></div>
           <span class="font-bold text-brand-700 text-sm">SIMARTA</span>
         </div>
-        <div class="flex items-center gap-1.5 overflow-x-auto py-1">
-          <button onclick="switchPage('page-dashboard-user')" class="bg-brand-50 text-brand-700 hover:bg-brand-100 px-2.5 py-1 rounded-lg text-[11px] font-bold shrink-0 transition">
-            Dashboard
-          </button>
-          <button onclick="switchPage('page-select-topic')" class="bg-brand-500 text-white px-2.5 py-1 rounded-lg text-[11px] font-bold shrink-0 transition shadow-sm">
-            Pilih Tema
-          </button>
-          <button id="mobileNavSubmitBtn" onclick="switchPage('page-submit-title')" class="bg-slate-100 text-slate-700 px-2.5 py-1 rounded-lg text-[11px] font-bold shrink-0 transition hidden">
-            Ajukan Judul
-          </button>
-          <button onclick="logout()" class="bg-rose-50 text-rose-600 px-2 py-1 rounded-lg text-[11px] font-bold shrink-0">
-            Logout
-          </button>
+        
+        <!-- MOBILE NAV USER / MAHASISWA -->
+        <div id="mobileNavUser" class="flex items-center gap-1.5 overflow-x-auto py-1">
+          <button onclick="switchPage('page-dashboard-user')" class="bg-brand-50 text-brand-700 hover:bg-brand-100 px-2.5 py-1 rounded-lg text-[11px] font-bold shrink-0 transition">Dashboard</button>
+          <button onclick="switchPage('page-select-topic')" class="bg-brand-500 text-white px-2.5 py-1 rounded-lg text-[11px] font-bold shrink-0 transition shadow-sm">Pilih Tema</button>
+          <button id="mobileNavSubmitBtn" onclick="switchPage('page-submit-title')" class="bg-slate-100 text-slate-700 px-2.5 py-1 rounded-lg text-[11px] font-bold shrink-0 transition hidden">Ajukan Judul</button>
+          <button onclick="logout()" class="bg-rose-50 text-rose-600 px-2 py-1 rounded-lg text-[11px] font-bold shrink-0">Logout</button>
+        </div>
+
+        <!-- MOBILE NAV SUPERADMIN -->
+        <div id="mobileNavSuperadmin" class="flex items-center gap-1.5 overflow-x-auto py-1 hidden">
+          <button onclick="switchPage('page-dashboard-admin')" class="bg-brand-50 text-brand-700 hover:bg-brand-100 px-2.5 py-1 rounded-lg text-[11px] font-bold shrink-0 transition">Verifikasi</button>
+          <button onclick="switchPage('page-confirm-topics')" class="bg-brand-500 text-white px-2.5 py-1 rounded-lg text-[11px] font-bold shrink-0 transition shadow-sm">Rekap</button>
+          <button onclick="switchPage('page-manage-users')" class="bg-slate-100 text-slate-700 px-2.5 py-1 rounded-lg text-[11px] font-bold shrink-0 transition">User</button>
+          <button onclick="switchPage('page-manage-topics')" class="bg-slate-100 text-slate-700 px-2.5 py-1 rounded-lg text-[11px] font-bold shrink-0 transition">Tema</button>
+          <button onclick="logout()" class="bg-rose-50 text-rose-600 px-2 py-1 rounded-lg text-[11px] font-bold shrink-0">Logout</button>
         </div>
       </div>
 
-      <!-- HEADER UTAMA LAMA -->
       <header class="bg-white border-b border-slate-200 px-6 py-4 hidden md:flex items-center justify-between">
         <h2 id="pageTitle" class="text-xl font-bold text-slate-800">Sistem Akademik</h2>
         <button onclick="logout()" class="text-xs bg-slate-100 px-3 py-1.5 rounded-lg text-slate-600">Logout</button>
@@ -345,6 +250,8 @@
               <table class="w-full text-left border-collapse">
                 <thead>
                   <tr class="bg-slate-50 text-slate-500 uppercase text-[11px] font-bold tracking-wider border-b border-slate-200">
+                    <th class="py-3.5 px-4">Tanggal</th>
+                    <th class="py-3.5 px-4">Waktu</th>
                     <th class="py-3.5 px-4">Mahasiswa (NIM)</th>
                     <th class="py-3.5 px-4">Tema & Dosen Pembimbing</th>
                     <th class="py-3.5 px-4">Judul Skripsi</th>
@@ -357,10 +264,12 @@
                 <tbody id="submissionTableBody" class="divide-y divide-slate-200 text-sm"></tbody>
               </table>
             </div>
+            <!-- Pagination Controls -->
+            <div id="submissionPagination" class="flex justify-between items-center p-4 bg-slate-50 border-t border-slate-200"></div>
           </div>
         </section>
 
-        <!-- 2. SUPERADMIN: REKAP PILIHAN TEMA (WAR TICKET RESULT) -->
+        <!-- 2. SUPERADMIN: REKAP PILIHAN TEMA -->
         <section id="page-confirm-topics" class="page-view space-y-6 hidden">
           <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
             <div>
@@ -370,9 +279,7 @@
 
             <div class="flex flex-wrap items-center gap-2 w-full md:w-auto">
               <div class="relative flex-1 md:w-48">
-                <span class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-slate-400">
-                  <i data-feather="search" class="w-3.5 h-3.5"></i>
-                </span>
+                <span class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-slate-400"><i data-feather="search" class="w-3.5 h-3.5"></i></span>
                 <input type="text" id="confirmTopicSearchInput" onkeyup="filterConfirmTopicTable()" placeholder="Cari data..." class="w-full pl-8 pr-3 py-2 bg-white border border-slate-300 rounded-lg text-xs focus:outline-none focus:ring-2 focus:ring-brand-500">
               </div>
               
@@ -468,9 +375,7 @@
 
               <div class="flex flex-wrap items-center gap-2 w-full md:w-auto">
                 <div class="relative flex-1 md:w-64">
-                  <span class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-slate-400">
-                    <i data-feather="search" class="w-3.5 h-3.5"></i>
-                  </span>
+                  <span class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-slate-400"><i data-feather="search" class="w-3.5 h-3.5"></i></span>
                   <input type="text" id="studentSearchInput" onkeyup="filterStudentTable()" placeholder="Cari Nama, NIM, Email, Angkatan..." class="w-full pl-8 pr-3 py-1.5 bg-white border border-slate-300 rounded-lg text-xs focus:outline-none focus:ring-2 focus:ring-brand-500">
                 </div>
                 <button onclick="toggleStudentSort('nama')" title="Urutkan Nama" class="bg-white hover:bg-slate-100 text-slate-700 border border-slate-300 px-3 py-1.5 rounded-lg text-xs font-bold transition flex items-center gap-1 shrink-0">
@@ -524,9 +429,7 @@
           </div>
 
           <!-- TAB NAVIGASI KLASTERSASI ANGKATAN DINAMIS -->
-          <div class="flex items-center gap-2 border-b border-slate-200 pb-2 overflow-x-auto" id="topicAngkatanTabs">
-            <!-- Rendered dynamically -->
-          </div>
+          <div class="flex items-center gap-2 border-b border-slate-200 pb-2 overflow-x-auto" id="topicAngkatanTabs"></div>
 
           <div id="topicCardsContainer" class="grid grid-cols-1 md:grid-cols-2 gap-6"></div>
         </section>
@@ -623,14 +526,19 @@
               </div>
 
               <div class="flex items-center gap-2">
+                <!-- TOMBOL EKSPOR JSON UNTUK STATIC HOSTING -->
+                <button onclick="downloadRepositoryJSON()" class="bg-indigo-500 hover:bg-indigo-600 text-white text-xs font-bold px-3 py-2.5 rounded-xl transition flex items-center gap-1 shadow-sm shrink-0">
+                  <i data-feather="download" class="w-3.5 h-3.5"></i> Export JSON Statis
+                </button>
+                <button onclick="loadRepositoriesData()" class="bg-brand-500 hover:bg-brand-600 text-white text-xs font-bold px-3 py-2.5 rounded-xl transition flex items-center gap-1 shadow-sm shrink-0">
+                  <i data-feather="refresh-cw" class="w-3.5 h-3.5"></i> Refresh Data
+                </button>
                 <div class="flex items-center gap-2 bg-slate-50 p-2 rounded-xl border border-slate-200">
                   <input type="file" id="csvRepoInput" accept=".csv" class="text-xs text-slate-500 file:mr-2 file:py-1 file:px-3 file:rounded-lg file:border-0 file:text-xs file:font-semibold file:bg-brand-50 file:text-brand-700 hover:file:bg-brand-100">
-                  <button onclick="handleBulkUploadRepositories()" class="bg-kemenkesYellow-500 hover:bg-kemenkesYellow-400 text-brand-800 text-xs font-bold px-3 py-2 rounded-lg transition shadow-sm">
-                    Bulk Upload CSV
-                  </button>
+                  <button onclick="handleBulkUploadRepositories()" class="bg-kemenkesYellow-500 hover:bg-kemenkesYellow-400 text-brand-800 text-xs font-bold px-3 py-2 rounded-lg transition shadow-sm">Bulk Upload CSV</button>
                 </div>
                 <button onclick="clearAllRepositories()" class="bg-rose-50 hover:bg-rose-100 text-rose-700 border border-rose-200 text-xs font-bold px-3 py-2.5 rounded-xl transition flex items-center gap-1 shadow-sm shrink-0">
-                  <i data-feather="trash-2" class="w-3.5 h-3.5"></i> Hapus Semua Judul
+                  <i data-feather="trash-2" class="w-3.5 h-3.5"></i> Hapus Semua
                 </button>
               </div>
             </div>
@@ -677,7 +585,8 @@
               <table class="w-full text-left border-collapse">
                 <thead>
                   <tr class="bg-slate-50 text-slate-500 uppercase text-[10px] font-bold tracking-wider border-b border-slate-200">
-                    <th class="py-3 px-4">Tanggal / Waktu</th>
+                    <th class="py-3 px-4">Tanggal</th>
+                    <th class="py-3 px-4">Waktu</th>
                     <th class="py-3 px-4">Judul Diajukan</th>
                     <th class="py-3 px-4 text-center">Status</th>
                     <th class="py-3 px-4">Catatan / Alasan</th>
@@ -689,7 +598,7 @@
           </div>
         </section>
 
-        <!-- 10. MAHASISWA: PILIH TEMA SKRIPSI & DOSEN TEMA (WAR TICKET) -->
+        <!-- 10. MAHASISWA: PILIH TEMA SKRIPSI & DOSEN TEMA -->
         <section id="page-select-topic" class="page-view space-y-6 hidden">
           <div class="bg-white border border-slate-200 rounded-2xl p-6 shadow-sm max-w-2xl mx-auto space-y-6">
             <h3 class="font-bold text-slate-800 text-lg border-b pb-3">Pemilihan Tema & Dosen Pembimbing Tema</h3>
@@ -714,7 +623,7 @@
               </button>
             </div>
 
-            <!-- Tampilan APPROVED (Hasil War Sukses) -->
+            <!-- Tampilan APPROVED -->
             <div id="topicApprovedMsg" class="hidden p-4 bg-emerald-50 border border-emerald-300 rounded-xl flex items-start gap-3 text-emerald-900 shadow-sm">
               <i data-feather="check-circle" class="w-5 h-5 text-emerald-600 mt-0.5 shrink-0"></i>
               <div class="w-full">
@@ -728,8 +637,6 @@
 
         <!-- MAHASISWA: FORM AJUKAN JUDUL -->
         <section id="page-submit-title" class="page-view space-y-6 hidden">
-          
-          <!-- TAMPILAN JIKA DIKUNCI ADMIN -->
           <div id="submitTitleLockedMessage" class="bg-white border border-slate-200 rounded-xl p-8 shadow-sm max-w-2xl mx-auto text-center hidden">
             <div class="w-16 h-16 bg-amber-100 text-amber-600 rounded-full flex items-center justify-center mx-auto mb-4">
               <i data-feather="lock" class="w-8 h-8"></i>
@@ -743,7 +650,6 @@
             </button>
           </div>
 
-          <!-- TAMPILAN FORM PENGAJUAN (JIKA DIBUKA) -->
           <div id="submitTitleFormContainer" class="bg-white border border-slate-200 rounded-xl p-8 shadow-sm max-w-2xl mx-auto space-y-6">
             <div class="border-b pb-3 mb-4">
               <h3 class="font-bold text-slate-800 text-lg">Pengajuan Judul Skripsi</h3>
@@ -759,7 +665,6 @@
               </button>
             </form>
           </div>
-
         </section>
 
       </div>
@@ -769,25 +674,38 @@
   <script>
     feather.replace();
 
+    function escapeHTML(str) {
+      if (!str) return '';
+      return String(str).replace(/[&<>"']/g, match => {
+        const map = { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' };
+        return map[match];
+      });
+    }
+
+    // Melakukan modifikasi escapeForJS yang lebih robust agar string aneh di database tidak mematahkan kode cetak
+    function escapeForJS(str) {
+      if (!str) return '';
+      return String(str)
+        .replace(/\\/g, '\\\\')
+        .replace(/'/g, "\\'")
+        .replace(/"/g, '&quot;')
+        .replace(/\n/g, '\\n')
+        .replace(/\r/g, '\\r');
+    }
+
     let currentUser = null; 
     let studentProfile = { uid: "", nim: "", nama: "", identitas: "", angkatan: "2023", selectedTopic: "", topicStatus: "NONE", selectedPA: "" };
 
-    let students = [];
-    let lecturers = [];
-    let topics = [];
-    let repositories = [];
-    let submissions = [];
-
+    let students = []; let lecturers = []; let topics = []; let repositories = []; let submissions = [];
     let activeTopicTab = "Semua";
+    let confirmTopicSortType = 'nama'; let confirmTopicSortDir = 'asc';
+    let studentSortType = 'nama'; let studentSortDirection = 'asc';
+    
+    // Konfigurasi Paginasi Admin
+    let currentSubmissionsPage = 1;
+    const submissionsPerPage = 10;
 
-    // Sorting variable
-    let confirmTopicSortType = 'nama'; // 'nama' atau 'nim'
-    let confirmTopicSortDir = 'asc';
-    let studentSortType = 'nama'; // 'nama' atau 'nim'
-    let studentSortDirection = 'asc'; // 'asc' atau 'desc'
-
-    // --- AUTO-LOGOUT SESI IDLE (60 MENIT) ---
-    const IDLE_TIMEOUT_MS = 60 * 60 * 1000; // 60 menit
+    const IDLE_TIMEOUT_MS = 60 * 60 * 1000; 
     let idleTimer = null;
 
     function resetIdleTimer() {
@@ -796,22 +714,14 @@
       idleTimer = setTimeout(() => {
         if (currentUser) {
           logout();
-          Swal.fire({
-            icon: 'warning',
-            title: 'Sesi Berakhir',
-            text: 'Anda telah di-logout otomatis karena tidak ada aktivitas selama 60 menit.'
-          });
+          Swal.fire({ icon: 'warning', title: 'Sesi Berakhir', text: 'Anda telah di-logout otomatis karena tidak ada aktivitas selama 60 menit.' });
         }
       }, IDLE_TIMEOUT_MS);
     }
 
-    ['mousemove', 'keydown', 'click', 'scroll', 'touchstart'].forEach(evt => {
-      window.addEventListener(evt, resetIdleTimer, true);
-    });
+    ['mousemove', 'keydown', 'click', 'scroll', 'touchstart'].forEach(evt => { window.addEventListener(evt, resetIdleTimer, true); });
 
-    function openPanduanSIMARTA() {
-      window.open('https://drive.google.com/file/d/11ja87EepKkXCOOGIFPCsh5aEHr0eB7c8/view', '_blank');
-    }
+    function openPanduanSIMARTA() { window.open('https://drive.google.com/file/d/11ja87EepKkXCOOGIFPCsh5aEHr0eB7c8/view', '_blank'); }
 
     function openLoginModal() {
       const btn = document.getElementById('btnLoginSubmit');
@@ -819,15 +729,9 @@
       document.getElementById('loginModal').classList.remove('hidden');
     }
 
-    function closeLoginModal() {
-      document.getElementById('loginModal').classList.add('hidden');
-    }
+    function closeLoginModal() { document.getElementById('loginModal').classList.add('hidden'); }
 
-    // ==========================================
-    // SAKELAR MAINTENANCE
-    // ==========================================
     const IS_UNDER_MAINTENANCE = false; 
-    // ==========================================
 
     window.addEventListener('DOMContentLoaded', () => {
       if (IS_UNDER_MAINTENANCE) {
@@ -840,7 +744,10 @@
         if (window.fbOnAuthStateChanged) {
           window.fbOnAuthStateChanged(window.firebaseAuth, async (user) => {
             if (user) {
-              if (user.email === "admin@simarta.ac.id" || user.email === "admin@admin.com") {
+              let isAdmin = false;
+              if (user.email === "admin@simarta.ac.id" || user.email === "admin@admin.com") isAdmin = true;
+
+              if (isAdmin) {
                 currentUser = { role: 'superadmin', nama: 'Admin Kaprodi', email: user.email };
                 document.getElementById('view-maintenance').classList.add('hidden');
                 loginAsRole('superadmin');
@@ -865,9 +772,7 @@
                 initFirestoreRealtimeSync();
                 resetIdleTimer();
               }
-            } else {
-              logout();
-            }
+            } else { logout(); }
           });
         }
       }, 500);
@@ -903,22 +808,30 @@
       if (role === 'superadmin') {
         document.getElementById('navSuperadmin').classList.remove('hidden');
         document.getElementById('navUser').classList.add('hidden');
+        
+        const mobileNavUser = document.getElementById('mobileNavUser');
+        const mobileNavAdmin = document.getElementById('mobileNavSuperadmin');
+        if(mobileNavUser) mobileNavUser.classList.add('hidden');
+        if(mobileNavAdmin) mobileNavAdmin.classList.remove('hidden');
+
         document.getElementById('userName').innerText = 'Admin Kaprodi';
         document.getElementById('userRoleBadge').innerText = 'Superadmin';
         document.getElementById('userAvatar').innerText = 'ADM';
-        
         document.getElementById('roleDisplayBadge').innerText = 'Superadmin / Pengelola';
-        
         switchPage('page-confirm-topics');
       } else {
         document.getElementById('navSuperadmin').classList.add('hidden');
         document.getElementById('navUser').classList.remove('hidden');
         
-        const displayNama = studentProfile.nama || studentProfile.identitas || 'Mahasiswa';
-        document.getElementById('userName').innerText = displayNama;
-        document.getElementById('userRoleBadge').innerText = 'NIM: ' + (studentProfile.nim || '-');
-        document.getElementById('userAvatar').innerText = displayNama.substring(0, 2).toUpperCase();
+        const mobileNavUser = document.getElementById('mobileNavUser');
+        const mobileNavAdmin = document.getElementById('mobileNavSuperadmin');
+        if(mobileNavUser) mobileNavUser.classList.remove('hidden');
+        if(mobileNavAdmin) mobileNavAdmin.classList.add('hidden');
         
+        const displayNama = escapeHTML(studentProfile.nama || studentProfile.identitas || 'Mahasiswa');
+        document.getElementById('userName').innerText = displayNama;
+        document.getElementById('userRoleBadge').innerText = 'NIM: ' + escapeHTML(studentProfile.nim || '-');
+        document.getElementById('userAvatar').innerText = displayNama.substring(0, 2).toUpperCase();
         document.getElementById('roleDisplayBadge').innerText = 'Mahasiswa / User';
 
         populateTopicDropdown();
@@ -951,85 +864,70 @@
           const data = docSnap.data();
           students.push({ id: docSnap.id, uid: docSnap.id, ...data });
           if (currentUser && currentUser.role === 'user' && docSnap.id === currentUser.uid) {
-            studentProfile = data;
-            renderUserDashboard();
-            checkStudentTopicState();
+            studentProfile = data; renderUserDashboard(); checkStudentTopicState();
           }
         });
-        renderConfirmTopicsTable();
-        renderStudentUserTable();
-        renderTopics();
-        populateTopicDropdown();
+        renderConfirmTopicsTable(); renderStudentUserTable(); renderTopics(); populateTopicDropdown();
       });
 
       window.fbOnSnapshot(window.fbCollection(window.firebaseDb, "topics"), (snapshot) => {
         topics = [];
         snapshot.forEach(docSnap => { topics.push({ id: docSnap.id, ...docSnap.data() }); });
-        renderTopics();
-        populateTopicDropdown();
+        renderTopics(); populateTopicDropdown();
       });
 
       window.fbOnSnapshot(window.fbCollection(window.firebaseDb, "lecturers"), (snapshot) => {
         lecturers = [];
-        snapshot.forEach(docSnap => {
-          lecturers.push({ id: docSnap.id, name: docSnap.data().name });
-        });
-        renderLecturers();
-        renderTopics();
-      });
-
-      window.fbOnSnapshot(window.fbCollection(window.firebaseDb, "repositories"), (snapshot) => {
-        repositories = [];
-        snapshot.forEach(docSnap => {
-          repositories.push({ id: docSnap.id, title: docSnap.data().title });
-        });
-        cachedTitles = []; // Clear cache saat repositori diupdate
-        renderRepositories();
+        snapshot.forEach(docSnap => { lecturers.push({ id: docSnap.id, name: docSnap.data().name }); });
+        renderLecturers(); renderTopics();
       });
 
       window.fbOnSnapshot(window.fbCollection(window.firebaseDb, "submissions"), (snapshot) => {
         submissions = [];
         snapshot.forEach(docSnap => { submissions.push({ id: docSnap.id, ...docSnap.data() }); });
-        renderSubmissions();
-        renderUserDashboard(); 
+        renderSubmissions(); renderUserDashboard(); 
       });
 
       window.fbOnSnapshot(window.fbDoc(window.firebaseDb, "settings", "global"), (docSnap) => {
-        if (docSnap.exists()) {
-          systemSettings = docSnap.data();
-        } else {
-          systemSettings = { isSubmitTitleOpen: false };
-        }
+        if (docSnap.exists()) { systemSettings = docSnap.data(); } else { systemSettings = { isSubmitTitleOpen: false }; }
         updateSubmitTitleUI();
       });
     }
 
-    // --- FITUR PENCARIAN & SIMILARITY CHECK PINTAR (OPTIMASI FIREBASE READ) ---
-    let cachedTitles = [];
+    // =========================================================================
+    // METODE FETCHING JSON STATIS UNTUK LANDING PAGE
+    // =========================================================================
+    const REPO_JSON_URL = './repositories.json'; 
+    let staticTitlesCache = [];
 
-    async function fetchAllTitles() {
-      if (cachedTitles.length > 0) return cachedTitles;
-      const repoRef = window.fbCollection(window.firebaseDb, "repositories");
-      const snap = await window.fbGetDocs(repoRef);
-      cachedTitles = [];
-      snap.forEach(docSnap => cachedTitles.push(docSnap.data().title));
-      return cachedTitles;
+    async function fetchStaticTitles() {
+      if (staticTitlesCache.length > 0) return staticTitlesCache;
+      try {
+        const res = await fetch(REPO_JSON_URL);
+        if (!res.ok) throw new Error('File repositories.json tidak ditemukan (404)');
+        const data = await res.json();
+        staticTitlesCache = data.map(item => typeof item === 'string' ? item : item.title);
+        return staticTitlesCache;
+      } catch(err) {
+        console.error(err);
+        throw new Error("Sistem pencarian sedang dalam pemeliharaan (Statis File belum di-upload).");
+      }
     }
 
     async function handlePublicSearch(e) {
       e.preventDefault();
-      const q = document.getElementById('publicSearchInput').value.trim();
+      const q = escapeHTML(document.getElementById('publicSearchInput').value.trim());
       const resContainer = document.getElementById('publicSearchResultSection');
       const resContent = document.getElementById('searchResultContent');
       const resTitle = document.getElementById('searchResultTitle');
 
       if (!q || !resContainer || !resContent) return;
 
-      resContent.innerHTML = '<div class="text-center py-4 text-slate-500 text-xs">Menganalisis repositori judul...</div>';
+      resContent.innerHTML = '<div class="text-center py-4 text-slate-500 text-xs">Menganalisis repositori judul dari server (Aman Kuota)...</div>';
       resContainer.classList.remove('hidden');
 
       try {
-        const allTitles = await fetchAllTitles();
+        const allTitles = await fetchStaticTitles();
         const isKeywordSearch = q.split(' ').length <= 2; 
 
         const tipsHTML = `
@@ -1045,7 +943,7 @@
           if (matched.length > 0) {
             let listHtml = `<p class="text-xs text-slate-600 mb-2">Ditemukan <b>${matched.length}</b> judul yang menggunakan kata kunci tersebut:</p>`;
             listHtml += `<div class="max-h-60 overflow-y-auto text-xs space-y-2 border border-slate-100 p-2 rounded-xl bg-slate-50">`;
-            matched.forEach(t => listHtml += `<div class="p-2.5 bg-white border border-slate-200 rounded-lg text-slate-800 shadow-sm font-medium">${t}</div>`);
+            matched.forEach(t => listHtml += `<div class="p-2.5 bg-white border border-slate-200 rounded-lg text-slate-800 shadow-sm font-medium">${escapeHTML(t)}</div>`);
             listHtml += `</div> ${tipsHTML}`;
             resContent.innerHTML = listHtml;
           } else {
@@ -1083,7 +981,7 @@
             results.forEach(r => {
               listHtml += `
                 <div class="p-2.5 bg-white border border-rose-100 rounded-lg text-slate-800 shadow-sm flex items-start justify-between gap-2">
-                  <span>${r.title}</span>
+                  <span>${escapeHTML(r.title)}</span>
                   <span class="bg-rose-100 text-rose-700 font-bold px-2 py-0.5 rounded text-[10px] shrink-0">Mirip ${r.similarity}%</span>
                 </div>`;
             });
@@ -1099,7 +997,7 @@
           }
         }
       } catch (err) {
-        resContent.innerHTML = `<div class="p-3 bg-rose-50 text-rose-700 text-xs rounded-xl">Gagal memproses pencarian: ${err.message}</div>`;
+        resContent.innerHTML = `<div class="p-3 bg-rose-50 text-rose-700 text-xs rounded-xl">Gagal memproses pencarian: ${escapeHTML(err.message)}</div>`;
       }
     }
 
@@ -1108,7 +1006,31 @@
       if (resContainer) resContainer.classList.add('hidden');
     }
 
-    // FUNGSI UNTUK MENU ADMIN (LIVE SIMILARITY)
+    let cachedTitles = [];
+
+    async function loadRepositoriesData() {
+      Swal.fire({ title: 'Memuat Repositori...', allowOutsideClick: false, didOpen: () => { Swal.showLoading(); }});
+      try {
+        const snap = await window.fbGetDocs(window.fbCollection(window.firebaseDb, "repositories"));
+        repositories = [];
+        snap.forEach(d => repositories.push({ id: d.id, title: d.data().title }));
+        cachedTitles = repositories.map(r => r.title);
+        renderRepositories();
+        Swal.close();
+      } catch(err) {
+        Swal.fire('Error', 'Gagal memuat data repositori: ' + err.message, 'error');
+      }
+    }
+
+    async function fetchAllTitlesAdmin() {
+      if (cachedTitles.length > 0) return cachedTitles;
+      const repoRef = window.fbCollection(window.firebaseDb, "repositories");
+      const snap = await window.fbGetDocs(repoRef);
+      cachedTitles = [];
+      snap.forEach(docSnap => cachedTitles.push(docSnap.data().title));
+      return cachedTitles;
+    }
+
     async function runSimilarityTest(e) {
       e.preventDefault();
       const input = document.getElementById('testTitleInput').value.toLowerCase();
@@ -1116,19 +1038,15 @@
       resBox.innerHTML = '<span class="text-xs text-slate-500">Menganalisis...</span>';
       resBox.classList.remove('hidden');
 
-      const allTitles = await fetchAllTitles();
-      
+      const allTitles = await fetchAllTitlesAdmin();
       const stopWords = ['dan', 'di', 'ke', 'dari', 'pada', 'dalam', 'yaitu', 'untuk', 'dengan', 'yang', 'terhadap', 'pengaruh', 'hubungan', 'gambaran', 'sebagai', 'studi', 'kasus', 'tentang', 'tingkat', 'pengetahuan', 'asuhan', 'kebidanan', 'faktor', 'upaya', 'karakteristik', 'pelaksanaan', 'penerapan', 'sikap', 'perilaku'];
       const queryWords = input.split(/\W+/).filter(w => w.length > 2 && !stopWords.includes(w));
       
-      let highestScore = 0;
-      let matchedTitles = []; 
+      let highestScore = 0; let matchedTitles = []; 
 
       allTitles.forEach(title => {
         const titleWords = title.toLowerCase().split(/\W+/).filter(w => w.length > 2 && !stopWords.includes(w));
-        let matches = 0;
-        const uniqueQueryWords = [...new Set(queryWords)];
-        
+        let matches = 0; const uniqueQueryWords = [...new Set(queryWords)];
         uniqueQueryWords.forEach(qw => { if (titleWords.includes(qw)) matches++; });
         
         const score = Math.round((matches / uniqueQueryWords.length) * 100);
@@ -1140,28 +1058,42 @@
 
       if (highestScore >= 40) {
         let listHtml = `<div class="max-h-40 overflow-y-auto text-left text-xs space-y-1 mt-3">`;
-        matchedTitles.slice(0, 5).forEach(r => listHtml += `<div class="p-2 bg-rose-50 border border-rose-200 rounded text-slate-700"><span class="font-bold text-rose-600">[Mirip ${r.score}%]</span> ${r.title}</div>`);
+        matchedTitles.slice(0, 5).forEach(r => listHtml += `<div class="p-2 bg-rose-50 border border-rose-200 rounded text-slate-700"><span class="font-bold text-rose-600">[Mirip ${r.score}%]</span> ${escapeHTML(r.title)}</div>`);
         listHtml += `</div>`;
 
-        resBox.innerHTML = `
-          <h4 class="font-bold text-sm text-rose-600">Hasil SIMILARITY: ${highestScore}% (TERDETEKSI KEMIRIPAN)</h4>
-          ${listHtml}
-        `;
+        resBox.innerHTML = `<h4 class="font-bold text-sm text-rose-600">Hasil SIMILARITY: ${highestScore}% (TERDETEKSI KEMIRIPAN)</h4>${listHtml}`;
       } else {
-        resBox.innerHTML = `
-          <h4 class="font-bold text-sm text-emerald-700">Hasil SIMILARITY: ${highestScore}% (LOLOS - BEBAS DUPLIKASI)</h4>
-        `;
+        resBox.innerHTML = `<h4 class="font-bold text-sm text-emerald-700">Hasil SIMILARITY: ${highestScore}% (LOLOS - BEBAS DUPLIKASI)</h4>`;
       }
     }
 
-    // --- REKAP Pilihan Tema (SUPERADMIN) ---
-    function toggleConfirmTopicSort(type) {
-      if (confirmTopicSortType === type) {
-        confirmTopicSortDir = (confirmTopicSortDir === 'asc') ? 'desc' : 'asc';
-      } else {
-        confirmTopicSortType = type;
-        confirmTopicSortDir = 'asc';
+    async function downloadRepositoryJSON() {
+      Swal.fire({ title: 'Membuat JSON Statis...', text: 'Mengambil data dari Firestore...', allowOutsideClick: false, didOpen: () => { Swal.showLoading(); }});
+      try {
+        const snap = await window.fbGetDocs(window.fbCollection(window.firebaseDb, "repositories"));
+        let data = [];
+        snap.forEach(d => data.push(d.data().title));
+        
+        const blob = new Blob([JSON.stringify(data)], { type: "application/json" });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = 'repositories.json';
+        a.click();
+        URL.revokeObjectURL(url);
+        
+        Swal.fire({
+          icon: 'success',
+          title: 'JSON Berhasil Dibuat!',
+          text: 'File "repositories.json" telah diunduh. Silakan upload file ini ke folder public server/hosting Anda agar fitur pencarian Landing Page dapat berjalan tanpa memotong kuota.',
+        });
+      } catch (err) {
+        Swal.fire('Error', 'Gagal memproses JSON: ' + err.message, 'error');
       }
+    }
+
+    function toggleConfirmTopicSort(type) {
+      if (confirmTopicSortType === type) { confirmTopicSortDir = (confirmTopicSortDir === 'asc') ? 'desc' : 'asc'; } else { confirmTopicSortType = type; confirmTopicSortDir = 'asc'; }
       renderConfirmTopicsTable();
     }
 
@@ -1170,11 +1102,7 @@
       if (!tbody) return;
       tbody.innerHTML = '';
 
-      if (students.length === 0) {
-        tbody.innerHTML = `<tr><td colspan="7" class="text-center py-4 text-slate-400">Belum ada data pendaftaran mahasiswa</td></tr>`;
-        return;
-      }
-
+      if (students.length === 0) { tbody.innerHTML = `<tr><td colspan="7" class="text-center py-4 text-slate-400">Belum ada data pendaftaran mahasiswa</td></tr>`; return; }
       const searchKeyword = (document.getElementById('confirmTopicSearchInput')?.value || '').toLowerCase().trim();
 
       let filtered = students.filter(st => {
@@ -1189,52 +1117,44 @@
       filtered.sort((a, b) => {
         let valA = (confirmTopicSortType === 'nim') ? (a.nim || '') : (a.nama || a.identitas || '');
         let valB = (confirmTopicSortType === 'nim') ? (b.nim || '') : (b.nama || b.identitas || '');
-        
-        valA = valA.toLowerCase();
-        valB = valB.toLowerCase();
-
         return (confirmTopicSortDir === 'asc') ? valA.localeCompare(valB) : valB.localeCompare(valA);
       });
 
       filtered.forEach(st => {
-        const displayName = st.nama || st.identitas || 'Mahasiswa';
+        const displayName = escapeHTML(st.nama || st.identitas || 'Mahasiswa');
+        const safeNim = escapeHTML(st.nim || '-');
+        const safeAngkatan = escapeHTML(st.angkatan || '2023');
+        const safePA = escapeHTML(st.selectedPA || 'Belum Memilih');
+        const safeTopic = escapeHTML(st.selectedTopic || 'Belum Memilih');
         const isApproved = st.topicStatus === 'APPROVED';
+        const jsUid = escapeForJS(st.uid);
+        const jsDisplayName = escapeForJS(st.nama || st.identitas || 'Mahasiswa');
+        const jsOldTopic = escapeForJS(st.selectedTopic || '');
+        const jsOldPA = escapeForJS(st.selectedPA || '');
 
         tbody.innerHTML += `
           <tr class="hover:bg-slate-50 transition">
             <td class="py-3 px-4 font-bold text-slate-900">${displayName}</td>
-            <td class="py-3 px-4 font-mono text-slate-600">${st.nim || '-'}</td>
-            <td class="py-3 px-4 font-semibold text-slate-700">${st.angkatan || '2023'}</td>
-            <td class="py-3 px-4 text-xs font-semibold text-slate-700">${st.selectedPA || 'Belum Memilih'}</td>
-            <td class="py-3 px-4 font-bold text-brand-700">${st.selectedTopic || 'Belum Memilih'}</td>
+            <td class="py-3 px-4 font-mono text-slate-600">${safeNim}</td>
+            <td class="py-3 px-4 font-semibold text-slate-700">${safeAngkatan}</td>
+            <td class="py-3 px-4 text-xs font-semibold text-slate-700">${safePA}</td>
+            <td class="py-3 px-4 font-bold text-brand-700">${safeTopic}</td>
             <td class="py-3 px-4 text-center">
-              <span class="px-2.5 py-1 rounded-full text-[10px] font-bold ${isApproved ? 'bg-emerald-100 text-emerald-800' : 'bg-slate-200 text-slate-700'}">
-                ${isApproved ? 'TERKUNCI' : 'KOSONG'}
-              </span>
+              <span class="px-2.5 py-1 rounded-full text-[10px] font-bold ${isApproved ? 'bg-emerald-100 text-emerald-800' : 'bg-slate-200 text-slate-700'}">${isApproved ? 'TERKUNCI' : 'KOSONG'}</span>
             </td>
             <td class="py-3 px-4 text-center space-x-1">
-              <button onclick="adminEditStudentTopic('${st.uid}', '${st.selectedTopic || ''}', '${st.selectedPA || ''}')" class="bg-amber-500 hover:bg-amber-600 text-white px-2.5 py-1.5 rounded-lg text-xs font-bold shadow">Pindah</button>
-              <button onclick="adminResetStudentTopic('${st.uid}', '${displayName}', '${st.selectedTopic || ''}', '${st.selectedPA || ''}')" class="bg-rose-500 hover:bg-rose-600 text-white px-2.5 py-1.5 rounded-lg text-xs font-bold shadow">Reset</button>
+              <button onclick="adminEditStudentTopic('${jsUid}', '${jsOldTopic}', '${jsOldPA}')" class="bg-amber-500 hover:bg-amber-600 text-white px-2.5 py-1.5 rounded-lg text-xs font-bold shadow">Pindah</button>
+              <button onclick="adminResetStudentTopic('${jsUid}', '${jsDisplayName}', '${jsOldTopic}', '${jsOldPA}')" class="bg-rose-500 hover:bg-rose-600 text-white px-2.5 py-1.5 rounded-lg text-xs font-bold shadow">Reset</button>
             </td>
           </tr>
         `;
       });
     }
 
-    function filterConfirmTopicTable() {
-      renderConfirmTopicsTable();
-    }
+    function filterConfirmTopicTable() { renderConfirmTopicsTable(); }
 
     async function adminResetStudentTopic(uid, studentName, oldTopic, oldPA) {
-      const confirm = await Swal.fire({
-        title: `Batalkan Tema ${studentName}?`,
-        text: "Pilihan tema mahasiswa ini akan dikosongkan dan kuotanya otomatis dikurangi/kembali terbuka.",
-        icon: 'warning',
-        showCancelButton: true,
-        confirmButtonColor: '#e11d48',
-        confirmButtonText: 'Ya, Reset Kuota!'
-      });
-
+      const confirm = await Swal.fire({ title: `Batalkan Tema ${escapeHTML(studentName)}?`, text: "Pilihan tema mahasiswa ini akan dikosongkan dan kuotanya otomatis dikurangi/kembali terbuka.", icon: 'warning', showCancelButton: true, confirmButtonColor: '#e11d48', confirmButtonText: 'Ya, Reset Kuota!' });
       if (confirm.isConfirmed) {
         try {
           if (oldTopic) {
@@ -1246,60 +1166,28 @@
                 let currentTopicCount = Math.max(0, (topicData.terisi || 0) - 1);
                 let lecturersList = topicData.topicLecturers || [];
                 let idx = lecturersList.findIndex(l => l.name === oldPA);
-                if (idx !== -1) {
-                  lecturersList[idx].terisi = Math.max(0, (lecturersList[idx].terisi || 0) - 1);
-                }
-                transaction.update(topicRef, {
-                  terisi: currentTopicCount,
-                  topicLecturers: lecturersList
-                });
+                if (idx !== -1) { lecturersList[idx].terisi = Math.max(0, (lecturersList[idx].terisi || 0) - 1); }
+                transaction.update(topicRef, { terisi: currentTopicCount, topicLecturers: lecturersList });
               }
             });
           }
-
-          await window.fbSetDoc(window.fbDoc(window.firebaseDb, "students", uid), {
-            selectedTopic: "",
-            selectedPA: "",
-            topicStatus: 'NONE' 
-          }, { merge: true });
-
+          await window.fbSetDoc(window.fbDoc(window.firebaseDb, "students", uid), { selectedTopic: "", selectedPA: "", topicStatus: 'NONE' }, { merge: true });
           Swal.fire({ icon: 'success', title: 'Kuota Dikosongkan!', timer: 1500, showConfirmButton: false });
-        } catch (err) {
-          Swal.fire({ icon: 'error', title: 'Gagal Reset', text: err.message });
-        }
+        } catch (err) { Swal.fire({ icon: 'error', title: 'Gagal Reset', text: err.message }); }
       }
     }
 
     async function adminEditStudentTopic(uid, currentTopic, currentPA) {
       let topicOptions = topics.reduce((acc, curr) => ({ ...acc, [curr.name]: curr.name }), {});
-      const { value: newTopic } = await Swal.fire({
-        title: 'Pindahkan Tema Mahasiswa',
-        input: 'select',
-        inputOptions: topicOptions,
-        inputValue: currentTopic,
-        showCancelButton: true,
-        confirmButtonText: 'Lanjut Pilih Dosen'
-      });
-
+      const { value: newTopic } = await Swal.fire({ title: 'Pindahkan Tema Mahasiswa', input: 'select', inputOptions: topicOptions, inputValue: currentTopic, showCancelButton: true, confirmButtonText: 'Lanjut Pilih Dosen' });
       if (newTopic) {
         const selectedTopicObj = topics.find(t => t.name === newTopic);
         const tLecturers = selectedTopicObj ? (selectedTopicObj.topicLecturers || []) : [];
         let lecturerOptions = tLecturers.reduce((acc, curr) => ({ ...acc, [curr.name]: curr.name }), {});
 
-        const { value: newPA } = await Swal.fire({
-          title: `Pilih Dosen untuk Tema "${newTopic}"`,
-          input: 'select',
-          inputOptions: lecturerOptions,
-          showCancelButton: true,
-          confirmButtonText: 'Simpan Perubahan'
-        });
-
+        const { value: newPA } = await Swal.fire({ title: `Pilih Dosen untuk Tema "${escapeHTML(newTopic)}"`, input: 'select', inputOptions: lecturerOptions, showCancelButton: true, confirmButtonText: 'Simpan Perubahan' });
         if (newPA) {
-          await window.fbSetDoc(window.fbDoc(window.firebaseDb, "students", uid), {
-            selectedTopic: newTopic,
-            selectedPA: newPA,
-            topicStatus: 'APPROVED'
-          }, { merge: true });
+          await window.fbSetDoc(window.fbDoc(window.firebaseDb, "students", uid), { selectedTopic: newTopic, selectedPA: newPA, topicStatus: 'APPROVED' }, { merge: true });
           Swal.fire({ icon: 'success', title: 'Pilihan Berhasil Diubah!', timer: 1500, showConfirmButton: false });
         }
       }
@@ -1307,78 +1195,20 @@
 
     function exportTopicRekapPDF() {
       const printWindow = window.open('', '_blank');
-      let rowsHtml = '';
-      let count = 1;
-      
+      let rowsHtml = ''; let count = 1;
       students.filter(s => s.topicStatus === 'APPROVED').forEach(st => {
-        rowsHtml += `
-          <tr>
-            <td style="border: 1px solid #ddd; padding: 8px; text-align: center;">${count++}</td>
-            <td style="border: 1px solid #ddd; padding: 8px;">${st.nim || '-'}</td>
-            <td style="border: 1px solid #ddd; padding: 8px;">${st.nama || st.identitas || ''}</td>
-            <td style="border: 1px solid #ddd; padding: 8px;">${st.angkatan || '2023'}</td>
-            <td style="border: 1px solid #ddd; padding: 8px;">${st.selectedTopic || '-'}</td>
-            <td style="border: 1px solid #ddd; padding: 8px;">${st.selectedPA || '-'}</td>
-          </tr>
-        `;
+        rowsHtml += `<tr><td style="border: 1px solid #ddd; padding: 8px; text-align: center;">${count++}</td><td style="border: 1px solid #ddd; padding: 8px;">${escapeHTML(st.nim || '-')}</td><td style="border: 1px solid #ddd; padding: 8px;">${escapeHTML(st.nama || st.identitas || '')}</td><td style="border: 1px solid #ddd; padding: 8px;">${escapeHTML(st.angkatan || '2023')}</td><td style="border: 1px solid #ddd; padding: 8px;">${escapeHTML(st.selectedTopic || '-')}</td><td style="border: 1px solid #ddd; padding: 8px;">${escapeHTML(st.selectedPA || '-')}</td></tr>`;
       });
-
-      const htmlContent = `
-        <!DOCTYPE html>
-        <html lang="id">
-        <head>
-            <meta charset="UTF-8">
-            <title>Rekapitulasi Pilihan Tema</title>
-            <style>
-                body { font-family: "Times New Roman", Times, serif; font-size: 12pt; padding: 20px; }
-                h2 { text-align: center; margin-bottom: 5px; }
-                .date { text-align: center; font-size: 10pt; color: #555; margin-bottom: 20px; }
-                table { width: 100%; border-collapse: collapse; margin-top: 10px; }
-                th { background-color: #00A99D; color: white; border: 1px solid #00A99D; padding: 8px; text-align: left; }
-                @media print { body { padding: 0; } }
-            </style>
-        </head>
-        <body>
-            <h2>Rekapitulasi Pilihan Tema Skripsi Mahasiswa</h2>
-            <div class="date">Waktu Cetak: ${new Date().toLocaleString('id-ID')}</div>
-            <table>
-                <thead>
-                    <tr>
-                        <th style="width: 5%; text-align: center;">No</th>
-                        <th style="width: 15%;">NIM</th>
-                        <th style="width: 25%;">Nama Mahasiswa</th>
-                        <th style="width: 15%;">Angkatan</th>
-                        <th style="width: 20%;">Tema</th>
-                        <th style="width: 20%;">Dosen Pembimbing</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    ${rowsHtml}
-                </tbody>
-            </table>
-            <script>
-                window.onload = function() { setTimeout(() => { window.print(); }, 500); };
-            <\/script>
-        </body>
-        </html>
-      `;
-      printWindow.document.open();
-      printWindow.document.write(htmlContent);
-      printWindow.document.close();
+      const htmlContent = `<!DOCTYPE html><html lang="id"><head><meta charset="UTF-8"><title>Rekapitulasi Pilihan Tema</title><style>body { font-family: "Times New Roman", Times, serif; font-size: 12pt; padding: 20px; } h2 { text-align: center; margin-bottom: 5px; } .date { text-align: center; font-size: 10pt; color: #555; margin-bottom: 20px; } table { width: 100%; border-collapse: collapse; margin-top: 10px; } th { background-color: #00A99D; color: white; border: 1px solid #00A99D; padding: 8px; text-align: left; } @media print { body { padding: 0; } }</style></head><body><h2>Rekapitulasi Pilihan Tema Skripsi Mahasiswa</h2><div class="date">Waktu Cetak: ${new Date().toLocaleString('id-ID')}</div><table><thead><tr><th style="width: 5%; text-align: center;">No</th><th style="width: 15%;">NIM</th><th style="width: 25%;">Nama Mahasiswa</th><th style="width: 15%;">Angkatan</th><th style="width: 20%;">Tema</th><th style="width: 20%;">Dosen Pembimbing</th></tr></thead><tbody>${rowsHtml}</tbody></table><script>window.onload = function() { setTimeout(() => { window.print(); }, 500); };<\/script></body></html>`;
+      printWindow.document.open(); printWindow.document.write(htmlContent); printWindow.document.close();
     }
 
     function exportTopicRekap() {
       let csvContent = "data:text/csv;charset=utf-8,NIM,Nama Mahasiswa,Angkatan,Tema,Dosen Pembimbing,Status\n";
-      students.forEach(st => {
-        csvContent += `"${st.nim || ''}","${st.nama || st.identitas || ''}","${st.angkatan || '2023'}","${st.selectedTopic || ''}","${st.selectedPA || ''}","${st.topicStatus || ''}"\n`;
-      });
-      const encodedUri = encodeURI(csvContent);
-      const link = document.createElement("a");
-      link.setAttribute("href", encodedUri); link.setAttribute("download", "rekap_pilihan_tema.csv");
-      document.body.appendChild(link); link.click(); document.body.removeChild(link);
+      students.forEach(st => { csvContent += `"${escapeHTML(st.nim || '')}","${escapeHTML(st.nama || st.identitas || '')}","${escapeHTML(st.angkatan || '2023')}","${escapeHTML(st.selectedTopic || '')}","${escapeHTML(st.selectedPA || '')}","${escapeHTML(st.topicStatus || '')}"\n`; });
+      const encodedUri = encodeURI(csvContent); const link = document.createElement("a"); link.setAttribute("href", encodedUri); link.setAttribute("download", "rekap_pilihan_tema.csv"); document.body.appendChild(link); link.click(); document.body.removeChild(link);
     }
 
-    // --- MANAJEMEN USER MAHASISWA ---
     async function handleCreateUser(e) {
       e.preventDefault();
       const name = document.getElementById('newStudentName').value.trim();
@@ -1390,174 +1220,91 @@
       try {
         const cred = await window.fbCreateUser(window.firebaseAuth, email, pass);
         const uid = cred.user.uid;
-        await window.fbSetDoc(window.fbDoc(window.firebaseDb, "students", uid), {
-          uid: uid, nim: nim, nama: name, identitas: name, angkatan: angkatan, email: email, selectedTopic: "", topicStatus: "NONE", selectedPA: ""
-        });
+        await window.fbSetDoc(window.fbDoc(window.firebaseDb, "students", uid), { uid: uid, nim: nim, nama: name, identitas: name, angkatan: angkatan, email: email, selectedTopic: "", topicStatus: "NONE", selectedPA: "" });
         Swal.fire({ icon: 'success', title: 'Akun Berhasil Dibuat!', text: `Mahasiswa ${name} (${nim}) Angkatan ${angkatan} terdaftar.` });
-        document.getElementById('newStudentName').value = ''; 
-        document.getElementById('newStudentNIM').value = ''; 
-        document.getElementById('newStudentAngkatan').value = '';
-        document.getElementById('newStudentEmail').value = ''; 
-        document.getElementById('newStudentPassword').value = '';
+        document.getElementById('newStudentName').value = ''; document.getElementById('newStudentNIM').value = ''; document.getElementById('newStudentAngkatan').value = ''; document.getElementById('newStudentEmail').value = ''; document.getElementById('newStudentPassword').value = '';
       } catch (error) { Swal.fire({ icon: 'error', title: 'Gagal Membuat Akun', text: error.message }); }
     }
 
     async function handleBulkUploadCSV() {
       const fileInput = document.getElementById('csvFileInput');
-      if (!fileInput.files.length) { 
-        Swal.fire({ icon: 'warning', title: 'Pilih File', text: 'Silakan pilih file CSV terlebih dahulu.' }); 
-        return; 
-      }
-
-      const file = fileInput.files[0];
-      const reader = new FileReader();
+      if (!fileInput.files.length) { Swal.fire({ icon: 'warning', title: 'Pilih File', text: 'Silakan pilih file CSV terlebih dahulu.' }); return; }
+      const file = fileInput.files[0]; const reader = new FileReader();
 
       reader.onload = async function(e) {
-        const text = e.target.result;
-        const lines = text.split('\n').map(l => l.trim()).filter(l => l.length > 0);
-        
-        if (lines.length === 0) { 
-          Swal.fire({ icon: 'error', title: 'File Kosong', text: 'File CSV tidak berisi data.' }); 
-          return; 
-        }
+        const text = e.target.result; const lines = text.split('\n').map(l => l.trim()).filter(l => l.length > 0);
+        if (lines.length === 0) { Swal.fire({ icon: 'error', title: 'File Kosong', text: 'File CSV tidak berisi data.' }); return; }
 
         const delimiter = lines[0].includes(';') ? ';' : ',';
-        let startIdx = 0;
-        if (lines[0].toLowerCase().includes('nama') || lines[0].toLowerCase().includes('name')) {
-          startIdx = 1;
-        }
-
+        let startIdx = 0; if (lines[0].toLowerCase().includes('nama') || lines[0].toLowerCase().includes('name')) { startIdx = 1; }
         const totalItems = lines.length - startIdx;
         
-        if (totalItems <= 0) {
-          Swal.fire({ icon: 'error', title: 'Data Kosong', text: 'Tidak ada data mahasiswa untuk diproses.' }); 
-          return;
-        }
+        if (totalItems <= 0) { Swal.fire({ icon: 'error', title: 'Data Kosong', text: 'Tidak ada data mahasiswa untuk diproses.' }); return; }
+        Swal.fire({ title: 'Sedang Mengunggah...', html: `Memproses data <b>0</b> dari <b>${totalItems}</b> mahasiswa...`, allowOutsideClick: false, didOpen: () => { Swal.showLoading(); }});
 
-        Swal.fire({ 
-          title: 'Sedang Mengunggah...', 
-          html: `Memproses data <b>0</b> dari <b>${totalItems}</b> mahasiswa...`, 
-          allowOutsideClick: false, 
-          didOpen: () => { Swal.showLoading(); }
-        });
-
-        let successCount = 0; 
-        let failCount = 0;
-
+        let successCount = 0; let failCount = 0;
         for (let i = startIdx; i < lines.length; i++) {
           const cols = lines[i].split(delimiter).map(c => c.trim().replace(/["']/g, ''));
-          
           if (cols.length >= 4) {
-            const [nama, nim, email, password, angkatan] = cols;
-            const strAngkatan = angkatan || "2023";
+            const [nama, nim, email, password, angkatan] = cols; const strAngkatan = angkatan || "2023";
             try {
               const cred = await window.fbCreateUser(window.firebaseAuth, email, password);
               const uid = cred.user.uid;
-              
-              await window.fbSetDoc(window.fbDoc(window.firebaseDb, "students", uid), { 
-                uid: uid, nim: nim, nama: nama, identitas: nama, email: email, angkatan: strAngkatan, selectedTopic: "", topicStatus: "NONE", selectedPA: "" 
-              });
+              await window.fbSetDoc(window.fbDoc(window.firebaseDb, "students", uid), { uid: uid, nim: nim, nama: nama, identitas: nama, email: email, angkatan: strAngkatan, selectedTopic: "", topicStatus: "NONE", selectedPA: "" });
               successCount++;
-            } catch (err) { 
-              console.error("Gagal mendaftarkan:", email, err.message);
-              failCount++; 
-            }
-          } else { 
-            failCount++; 
-          }
+            } catch (err) { failCount++; }
+          } else { failCount++; }
           Swal.update({ html: `Memproses data <b>${successCount}</b> dari <b>${totalItems}</b> mahasiswa...` });
         }
-        
-        Swal.fire({ 
-          icon: 'success', 
-          title: 'Bulk Upload Selesai!', 
-          html: `Berhasil mendaftarkan: <b>${successCount}</b> akun.<br>Gagal/Terlewat: <b>${failCount}</b> akun.<br><br><span class="text-xs text-rose-600 font-bold">Memuat ulang sistem...</span>`,
-          showConfirmButton: false,
-          timer: 3500
-        }).then(() => {
-          window.location.reload();
-        });
-        
+        Swal.fire({ icon: 'success', title: 'Bulk Upload Selesai!', html: `Berhasil mendaftarkan: <b>${successCount}</b> akun.<br>Gagal/Terlewat: <b>${failCount}</b> akun.<br><br><span class="text-xs text-rose-600 font-bold">Memuat ulang sistem...</span>`, showConfirmButton: false, timer: 3500 }).then(() => { window.location.reload(); });
         fileInput.value = '';
       };
-      
       reader.readAsText(file);
     }
 
     function toggleStudentSort(type) {
       if (type === 'nama') {
-        if (studentSortType === 'nama') {
-          studentSortDirection = (studentSortDirection === 'asc') ? 'desc' : 'asc';
-        } else {
-          studentSortType = 'nama';
-          studentSortDirection = 'asc';
-        }
+        if (studentSortType === 'nama') { studentSortDirection = (studentSortDirection === 'asc') ? 'desc' : 'asc'; } else { studentSortType = 'nama'; studentSortDirection = 'asc'; }
       } else if (type === 'nim') {
-        if (studentSortType === 'nim') {
-          studentSortDirection = (studentSortDirection === 'asc') ? 'desc' : 'asc';
-        } else {
-          studentSortType = 'nim';
-          studentSortDirection = 'asc';
-        }
+        if (studentSortType === 'nim') { studentSortDirection = (studentSortDirection === 'asc') ? 'desc' : 'asc'; } else { studentSortType = 'nim'; studentSortDirection = 'asc'; }
       }
 
-      // Update Label
-      const namaLabel = document.getElementById('sortNamaLabel');
-      const nimLabel = document.getElementById('sortNimLabel');
-      
+      const namaLabel = document.getElementById('sortNamaLabel'); const nimLabel = document.getElementById('sortNimLabel');
       if (namaLabel) namaLabel.innerText = studentSortType === 'nama' ? `Nama (${studentSortDirection === 'asc' ? 'A-Z' : 'Z-A'})` : 'Nama';
       if (nimLabel) nimLabel.innerText = studentSortType === 'nim' ? `NIM (${studentSortDirection === 'asc' ? 'A-Z' : 'Z-A'})` : 'NIM';
-
       renderStudentUserTable();
     }
 
     function renderStudentUserTable() {
-      const tbody = document.getElementById('studentUserTableBody');
-      const countDisplay = document.getElementById('studentTotalCount');
-      if (!tbody) return;
-      tbody.innerHTML = '';
-      if (countDisplay) countDisplay.innerText = students.length;
-
-      if (students.length === 0) {
-        tbody.innerHTML = `<tr><td colspan="5" class="text-center py-4 text-slate-400">Belum ada akun mahasiswa yang terdaftar.</td></tr>`;
-        return;
-      }
+      const tbody = document.getElementById('studentUserTableBody'); const countDisplay = document.getElementById('studentTotalCount');
+      if (!tbody) return; tbody.innerHTML = ''; if (countDisplay) countDisplay.innerText = students.length;
+      if (students.length === 0) { tbody.innerHTML = `<tr><td colspan="5" class="text-center py-4 text-slate-400">Belum ada akun mahasiswa yang terdaftar.</td></tr>`; return; }
 
       const searchKeyword = (document.getElementById('studentSearchInput')?.value || '').toLowerCase().trim();
-
       let filtered = students.filter(st => {
-        const name = (st.nama || st.identitas || '').toLowerCase();
-        const nim = (st.nim || '').toLowerCase();
-        const email = (st.email || '').toLowerCase();
-        const angkatan = (st.angkatan || '').toLowerCase();
+        const name = (st.nama || st.identitas || '').toLowerCase(); const nim = (st.nim || '').toLowerCase(); const email = (st.email || '').toLowerCase(); const angkatan = (st.angkatan || '').toLowerCase();
         return name.includes(searchKeyword) || nim.includes(searchKeyword) || email.includes(searchKeyword) || angkatan.includes(searchKeyword);
       });
 
       filtered.sort((a, b) => {
         let valA = (studentSortType === 'nim') ? (a.nim || '') : (a.nama || a.identitas || '');
         let valB = (studentSortType === 'nim') ? (b.nim || '') : (b.nama || b.identitas || '');
-        
-        valA = valA.toLowerCase();
-        valB = valB.toLowerCase();
-
-        return studentSortDirection === 'asc' ? valA.localeCompare(valB) : valB.localeCompare(valA);
+        return studentSortDirection === 'asc' ? valA.toLowerCase().localeCompare(valB.toLowerCase()) : valB.toLowerCase().localeCompare(valA.toLowerCase());
       });
 
       filtered.forEach(st => {
-        const sId = st.id;
-        const sNama = (st.nama || st.identitas || '').replace(/'/g, "\\'").replace(/"/g, '&quot;');
-        const sNim = (st.nim || '').replace(/'/g, "\\'");
-        const sAngkatan = (st.angkatan || '2023').replace(/'/g, "\\'");
+        const safeNama = escapeHTML(st.nama || st.identitas || 'Mahasiswa'); const safeNim = escapeHTML(st.nim || (st.email ? st.email.split('@')[0] : '-')); const safeAngkatan = escapeHTML(st.angkatan || '2023'); const safeEmail = escapeHTML(st.email || '-');
+        const jsId = escapeForJS(st.id); const jsNama = escapeForJS(st.nama || st.identitas || ''); const jsNim = escapeForJS(st.nim || ''); const jsAngkatan = escapeForJS(st.angkatan || '2023');
 
         tbody.innerHTML += `
           <tr class="hover:bg-slate-50 transition">
-            <td class="py-3 px-4 font-bold text-slate-800">${st.nama || st.identitas || 'Mahasiswa'}</td>
-            <td class="py-3 px-4 font-mono text-slate-600">${st.nim || (st.email ? st.email.split('@')[0] : '-')}</td>
-            <td class="py-3 px-4 text-slate-700 font-semibold">${st.angkatan || '<span class="text-amber-500 italic">Belum diset</span>'}</td>
-            <td class="py-3 px-4 text-slate-600">${st.email || '-'}</td>
+            <td class="py-3 px-4 font-bold text-slate-800">${safeNama}</td>
+            <td class="py-3 px-4 font-mono text-slate-600">${safeNim}</td>
+            <td class="py-3 px-4 text-slate-700 font-semibold">${st.angkatan ? safeAngkatan : '<span class="text-amber-500 italic">Belum diset</span>'}</td>
+            <td class="py-3 px-4 text-slate-600">${safeEmail}</td>
             <td class="py-3 px-4 text-center space-x-2">
-              <button onclick="editStudentData('${sId}', '${sNama}', '${sNim}', '${sAngkatan}')" class="text-xs text-amber-600 hover:text-amber-800 font-bold hover:underline">Edit</button>
-              <button onclick="removeStudent('${st.id}')" class="text-xs text-rose-500 hover:text-rose-700 font-bold hover:underline">Hapus</button>
+              <button onclick="editStudentData('${jsId}', '${jsNama}', '${jsNim}', '${jsAngkatan}')" class="text-xs text-amber-600 hover:text-amber-800 font-bold hover:underline">Edit</button>
+              <button onclick="removeStudent('${jsId}')" class="text-xs text-rose-500 hover:text-rose-700 font-bold hover:underline">Hapus</button>
             </td>
           </tr>
         `;
@@ -1569,68 +1316,26 @@
     async function editStudentData(docId, currentNama, currentNim, currentAngkatan) {
       const { value: formValues } = await Swal.fire({
         title: 'Edit Data Mahasiswa',
-        html: `
-          <div style="text-align: left;" class="space-y-3 text-xs">
-            <div>
-              <label class="block font-bold uppercase mb-1 text-slate-700">Nama Mahasiswa</label>
-              <input id="swal-input-nama" class="swal2-input !m-0 !w-full !text-sm" value="${currentNama}">
-            </div>
-            <div>
-              <label class="block font-bold uppercase mt-2 mb-1 text-slate-700">NIM</label>
-              <input id="swal-input-nim" class="swal2-input !m-0 !w-full !text-sm" value="${currentNim}">
-            </div>
-            <div>
-              <label class="block font-bold uppercase mt-2 mb-1 text-slate-700">Angkatan</label>
-              <input id="swal-input-angkatan" class="swal2-input !m-0 !w-full !text-sm" placeholder="Contoh: 2023, 2024" value="${currentAngkatan}">
-            </div>
-          </div>
-        `,
-        focusConfirm: false,
-        showCancelButton: true,
-        confirmButtonText: 'Simpan Perubahan',
-        cancelButtonText: 'Batal',
-        confirmButtonColor: '#00A99D',
-        preConfirm: () => {
-          return {
-            nama: document.getElementById('swal-input-nama').value.trim(),
-            nim: document.getElementById('swal-input-nim').value.trim(),
-            angkatan: document.getElementById('swal-input-angkatan').value.trim()
-          }
-        }
+        html: `<div style="text-align: left;" class="space-y-3 text-xs">
+            <div><label class="block font-bold uppercase mb-1 text-slate-700">Nama Mahasiswa</label><input id="swal-input-nama" class="swal2-input !m-0 !w-full !text-sm" value="${escapeHTML(currentNama)}"></div>
+            <div><label class="block font-bold uppercase mt-2 mb-1 text-slate-700">NIM</label><input id="swal-input-nim" class="swal2-input !m-0 !w-full !text-sm" value="${escapeHTML(currentNim)}"></div>
+            <div><label class="block font-bold uppercase mt-2 mb-1 text-slate-700">Angkatan</label><input id="swal-input-angkatan" class="swal2-input !m-0 !w-full !text-sm" placeholder="Contoh: 2023, 2024" value="${escapeHTML(currentAngkatan)}"></div>
+          </div>`,
+        focusConfirm: false, showCancelButton: true, confirmButtonText: 'Simpan Perubahan', cancelButtonText: 'Batal', confirmButtonColor: '#00A99D',
+        preConfirm: () => { return { nama: document.getElementById('swal-input-nama').value.trim(), nim: document.getElementById('swal-input-nim').value.trim(), angkatan: document.getElementById('swal-input-angkatan').value.trim() } }
       });
 
       if (formValues) {
-        if (!formValues.nama || !formValues.nim || !formValues.angkatan) {
-          Swal.fire('Peringatan', 'Semua kolom wajib diisi!', 'warning');
-          return;
-        }
-
+        if (!formValues.nama || !formValues.nim || !formValues.angkatan) { Swal.fire('Peringatan', 'Semua kolom wajib diisi!', 'warning'); return; }
         try {
-          await window.fbSetDoc(window.fbDoc(window.firebaseDb, "students", docId), {
-            nama: formValues.nama,
-            identitas: formValues.nama,
-            nim: formValues.nim,
-            angkatan: formValues.angkatan
-          }, { merge: true });
-
-          Swal.fire({
-            icon: 'success',
-            title: 'Berhasil Diperbarui!',
-            text: `Data mahasiswa ${formValues.nama} (Angkatan ${formValues.angkatan}) berhasil disimpan.`,
-            timer: 1500,
-            showConfirmButton: false
-          });
-        } catch (err) {
-          Swal.fire({ icon: 'error', title: 'Gagal Menyimpan', text: err.message });
-        }
+          await window.fbSetDoc(window.fbDoc(window.firebaseDb, "students", docId), { nama: formValues.nama, identitas: formValues.nama, nim: formValues.nim, angkatan: formValues.angkatan }, { merge: true });
+          Swal.fire({ icon: 'success', title: 'Berhasil Diperbarui!', text: `Data mahasiswa ${formValues.nama} (Angkatan ${formValues.angkatan}) berhasil disimpan.`, timer: 1500, showConfirmButton: false });
+        } catch (err) { Swal.fire({ icon: 'error', title: 'Gagal Menyimpan', text: err.message }); }
       }
     }
 
     async function removeStudent(docId) {
-      try {
-        await window.fbDeleteDoc(window.fbDoc(window.firebaseDb, "students", docId));
-        Swal.fire({ icon: 'success', title: 'Akun Mahasiswa Dihapus dari Firestore', timer: 1200, showConfirmButton: false });
-      } catch (err) { Swal.fire({ icon: 'error', title: 'Gagal Menghapus', text: err.message }); }
+      try { await window.fbDeleteDoc(window.fbDoc(window.firebaseDb, "students", docId)); Swal.fire({ icon: 'success', title: 'Akun Mahasiswa Dihapus dari Firestore', timer: 1200, showConfirmButton: false }); } catch (err) { Swal.fire({ icon: 'error', title: 'Gagal Menghapus', text: err.message }); }
     }
 
     async function clearAllStudents() {
@@ -1649,24 +1354,17 @@
       }
     }
 
-    // --- MANAJEMEN DOSEN ---
     async function addLecturer(e) {
-      e.preventDefault();
-      const input = document.getElementById('newLecturerName');
-      const val = input.value.trim();
+      e.preventDefault(); const input = document.getElementById('newLecturerName'); const val = input.value.trim();
       if (val) {
         const docId = Date.now().toString();
         await window.fbSetDoc(window.fbDoc(window.firebaseDb, "lecturers", docId), { name: val });
-        input.value = '';
-        Swal.fire({ icon: 'success', title: 'Dosen Ditambahkan!', timer: 1500, showConfirmButton: false });
+        input.value = ''; Swal.fire({ icon: 'success', title: 'Dosen Ditambahkan!', timer: 1500, showConfirmButton: false });
       }
     }
 
     async function removeLecturer(docId) {
-      try {
-        await window.fbDeleteDoc(window.fbDoc(window.firebaseDb, "lecturers", docId));
-        Swal.fire({ icon: 'success', title: 'Dosen Berhasil Dihapus', timer: 1200, showConfirmButton: false });
-      } catch (err) { Swal.fire({ icon: 'error', title: 'Gagal Menghapus', text: err.message }); }
+      try { await window.fbDeleteDoc(window.fbDoc(window.firebaseDb, "lecturers", docId)); Swal.fire({ icon: 'success', title: 'Dosen Berhasil Dihapus', timer: 1200, showConfirmButton: false }); } catch (err) { Swal.fire({ icon: 'error', title: 'Gagal Menghapus', text: err.message }); }
     }
 
     async function clearAllLecturers() {
@@ -1678,28 +1376,19 @@
     }
 
     function renderLecturers() {
-      const list = document.getElementById('lecturerList');
-      if (!list) return;
-      list.innerHTML = '';
+      const list = document.getElementById('lecturerList'); if (!list) return; list.innerHTML = '';
       lecturers.forEach((doc) => {
-        list.innerHTML += `
-          <li class="py-3 px-4 flex justify-between items-center hover:bg-slate-50 transition">
-            <span class="font-medium text-slate-800">${doc.name}</span>
-            <button onclick="removeLecturer('${doc.id}')" class="text-xs text-rose-500 hover:underline font-semibold">Hapus</button>
-          </li>
-        `;
+        list.innerHTML += `<li class="py-3 px-4 flex justify-between items-center hover:bg-slate-50 transition"><span class="font-medium text-slate-800">${escapeHTML(doc.name)}</span><button onclick="removeLecturer('${escapeForJS(doc.id)}')" class="text-xs text-rose-500 hover:underline font-semibold">Hapus</button></li>`;
       });
     }
 
     async function handleBulkUploadLecturers() {
       const fileInput = document.getElementById('csvLecturerInput');
       if (!fileInput.files.length) { Swal.fire({ icon: 'warning', title: 'Pilih File', text: 'Silakan pilih file CSV dosen terlebih dahulu.' }); return; }
-      const file = fileInput.files[0];
-      const reader = new FileReader();
+      const file = fileInput.files[0]; const reader = new FileReader();
 
       reader.onload = async function(e) {
-        const text = e.target.result;
-        const lines = text.split('\n').map(l => l.trim()).filter(l => l.length > 0);
+        const text = e.target.result; const lines = text.split('\n').map(l => l.trim()).filter(l => l.length > 0);
         let startIdx = 0; if (lines[0].toLowerCase().includes('dosen') || lines[0].toLowerCase().includes('nama')) { startIdx = 1; }
 
         let batch = window.fbWriteBatch(window.firebaseDb); let counter = 0; let successCount = 0;
@@ -1719,66 +1408,38 @@
       reader.readAsText(file);
     }
 
-    // --- KELOLA TEMA DAN DOSEN ---
     async function addTopic(e) {
       e.preventDefault();
-      const name = document.getElementById('newTopicName').value.trim();
-      const angkatan = document.getElementById('newTopicAngkatan').value.trim() || "Semua";
-      const maxQuota = parseInt(document.getElementById('newTopicMaxQuota').value);
-
+      const name = document.getElementById('newTopicName').value.trim(); const angkatan = document.getElementById('newTopicAngkatan').value.trim() || "Semua"; const maxQuota = parseInt(document.getElementById('newTopicMaxQuota').value);
       if (name && maxQuota > 0) {
-        // ID Dokumen unik berbasis waktu agar nama tema sama di angkatan berbeda tidak saling menimpa
         const topicId = Date.now().toString();
-
-        await window.fbSetDoc(window.fbDoc(window.firebaseDb, "topics", topicId), { 
-          id: topicId,
-          name: name, 
-          angkatan: angkatan,
-          maxQuota: maxQuota, 
-          terisi: 0,
-          topicLecturers: [],
-          isActive: true 
-        });
-        document.getElementById('newTopicName').value = ''; 
-        document.getElementById('newTopicAngkatan').value = 'Semua';
-        document.getElementById('newTopicMaxQuota').value = '';
+        await window.fbSetDoc(window.fbDoc(window.firebaseDb, "topics", topicId), { id: topicId, name: name, angkatan: angkatan, maxQuota: maxQuota, terisi: 0, topicLecturers: [], isActive: true });
+        document.getElementById('newTopicName').value = ''; document.getElementById('newTopicAngkatan').value = 'Semua'; document.getElementById('newTopicMaxQuota').value = '';
         Swal.fire({ icon: 'success', title: 'Tema Ditambahkan!', timer: 1500, showConfirmButton: false });
       }
     }
 
     async function toggleTopicStatus(topicId, currentStatus) {
       const newStatus = !currentStatus;
-      await window.fbUpdateDoc(window.fbDoc(window.firebaseDb, "topics", topicId), { 
-        isActive: newStatus 
-      });
-      Swal.fire({ 
-        icon: 'success', 
-        title: newStatus ? 'Tema Diaktifkan!' : 'Tema Dinonaktifkan!', 
-        timer: 1500, 
-        showConfirmButton: false 
-      });
+      await window.fbUpdateDoc(window.fbDoc(window.firebaseDb, "topics", topicId), { isActive: newStatus });
+      Swal.fire({ icon: 'success', title: newStatus ? 'Tema Diaktifkan!' : 'Tema Dinonaktifkan!', timer: 1500, showConfirmButton: false });
     }
 
     async function removeTopic(topicId) {
-      const targetTopic = topics.find(t => t.id === topicId);
-      const topicName = targetTopic ? targetTopic.name : topicId;
-
-      const confirm = await Swal.fire({ title: `Hapus Tema ${topicName}?`, text: "Seluruh konfigurasi dosen pembimbing pada tema ini akan terhapus.", icon: 'warning', showCancelButton: true, confirmButtonColor: '#e11d48', confirmButtonText: 'Ya, Hapus Tema!' });
+      const targetTopic = topics.find(t => t.id === topicId); const topicName = targetTopic ? targetTopic.name : topicId;
+      const confirm = await Swal.fire({ title: `Hapus Tema ${escapeHTML(topicName)}?`, text: "Seluruh konfigurasi dosen pembimbing pada tema ini akan terhapus.", icon: 'warning', showCancelButton: true, confirmButtonColor: '#e11d48', confirmButtonText: 'Ya, Hapus Tema!' });
       if (confirm.isConfirmed) { await window.fbDeleteDoc(window.fbDoc(window.firebaseDb, "topics", topicId)); }
     }
 
     async function addLecturerToTopic(topicId) {
-      const selectElem = document.getElementById(`selectLecturer_${topicId}`);
-      const quotaInput = document.getElementById(`quotaLecturer_${topicId}`);
-      const lecturerName = selectElem ? selectElem.value : '';
-      const quota = parseInt(quotaInput ? quotaInput.value : 0);
+      const selectElem = document.getElementById(`selectLecturer_${topicId}`); const quotaInput = document.getElementById(`quotaLecturer_${topicId}`);
+      const lecturerName = selectElem ? selectElem.value : ''; const quota = parseInt(quotaInput ? quotaInput.value : 0);
 
       if (!lecturerName || quota <= 0) { Swal.fire({ icon: 'warning', title: 'Pilih Dosen & Kuota Valid', text: 'Pilih nama dosen dan tentukan kuota minimal 1.' }); return; }
-      const targetTopic = topics.find(t => t.id === topicId);
-      if (!targetTopic) return;
+      const targetTopic = topics.find(t => t.id === topicId); if (!targetTopic) return;
 
       let list = targetTopic.topicLecturers || [];
-      if (list.some(l => l.name === lecturerName)) { Swal.fire({ icon: 'error', title: 'Dosen Sudah Ada', text: `${lecturerName} sudah menjadi dosen pembimbing di tema ini.` }); return; }
+      if (list.some(l => l.name === lecturerName)) { Swal.fire({ icon: 'error', title: 'Dosen Sudah Ada', text: `${escapeHTML(lecturerName)} sudah menjadi dosen pembimbing di tema ini.` }); return; }
 
       list.push({ name: lecturerName, quota: quota, terisi: 0 });
       await window.fbUpdateDoc(window.fbDoc(window.firebaseDb, "topics", topicId), { topicLecturers: list });
@@ -1786,243 +1447,105 @@
     }
 
     async function removeLecturerFromTopic(topicId, lecturerName) {
-      const targetTopic = topics.find(t => t.id === topicId);
-      if (!targetTopic) return;
-
-      let list = targetTopic.topicLecturers || [];
-      list = list.filter(l => l.name !== lecturerName);
+      const targetTopic = topics.find(t => t.id === topicId); if (!targetTopic) return;
+      let list = targetTopic.topicLecturers || []; list = list.filter(l => l.name !== lecturerName);
       await window.fbUpdateDoc(window.fbDoc(window.firebaseDb, "topics", topicId), { topicLecturers: list });
     }
 
     async function editTopicQuota(topicId, topicName, currentQuota) {
-      const { value: newQuota } = await Swal.fire({
-        title: 'Ubah Kuota Tema',
-        text: `Berapa kuota baru untuk tema ${topicName}?`,
-        input: 'number',
-        inputValue: currentQuota,
-        inputAttributes: { min: 1 },
-        showCancelButton: true,
-        confirmButtonText: 'Simpan Perubahan',
-        cancelButtonText: 'Batal'
-      });
-
+      const { value: newQuota } = await Swal.fire({ title: 'Ubah Kuota Tema', text: `Berapa kuota baru untuk tema ${escapeHTML(topicName)}?`, input: 'number', inputValue: currentQuota, inputAttributes: { min: 1 }, showCancelButton: true, confirmButtonText: 'Simpan Perubahan', cancelButtonText: 'Batal' });
       if (newQuota && parseInt(newQuota) > 0) {
-        await window.fbUpdateDoc(window.fbDoc(window.firebaseDb, "topics", topicId), { 
-          maxQuota: parseInt(newQuota) 
-        });
+        await window.fbUpdateDoc(window.fbDoc(window.firebaseDb, "topics", topicId), { maxQuota: parseInt(newQuota) });
         Swal.fire({ icon: 'success', title: 'Kuota Tema Diperbarui!', timer: 1200, showConfirmButton: false });
       }
     }
 
     async function editLecturerQuota(topicId, lecturerName, currentQuota) {
-      const { value: newQuota } = await Swal.fire({
-        title: 'Ubah Kuota Dosen',
-        text: `Berapa kuota baru untuk dosen ${lecturerName}?`,
-        input: 'number',
-        inputValue: currentQuota,
-        inputAttributes: { min: 1 },
-        showCancelButton: true,
-        confirmButtonText: 'Simpan Perubahan',
-        cancelButtonText: 'Batal'
-      });
-
+      const { value: newQuota } = await Swal.fire({ title: 'Ubah Kuota Dosen', text: `Berapa kuota baru untuk dosen ${escapeHTML(lecturerName)}?`, input: 'number', inputValue: currentQuota, inputAttributes: { min: 1 }, showCancelButton: true, confirmButtonText: 'Simpan Perubahan', cancelButtonText: 'Batal' });
       if (newQuota && parseInt(newQuota) > 0) {
-        const targetTopic = topics.find(t => t.id === topicId);
-        if (!targetTopic) return;
-
-        let list = targetTopic.topicLecturers || [];
-        list = list.map(l => l.name === lecturerName ? { ...l, quota: parseInt(newQuota) } : l);
-        await window.fbUpdateDoc(window.fbDoc(window.firebaseDb, "topics", topicId), { 
-          topicLecturers: list 
-        });
+        const targetTopic = topics.find(t => t.id === topicId); if (!targetTopic) return;
+        let list = targetTopic.topicLecturers || []; list = list.map(l => l.name === lecturerName ? { ...l, quota: parseInt(newQuota) } : l);
+        await window.fbUpdateDoc(window.fbDoc(window.firebaseDb, "topics", topicId), { topicLecturers: list });
         Swal.fire({ icon: 'success', title: 'Kuota Dosen Diperbarui!', timer: 1200, showConfirmButton: false });
       }
     }
 
     async function toggleAngkatanStatus(targetAngkatan, currentActiveState) {
-      const newStatus = !currentActiveState;
-      const actionText = newStatus ? "MENGAKTIFKAN" : "MENYEMBUNYIKAN/MENONAKTIFKAN";
-      
-      const confirm = await Swal.fire({
-        title: `${newStatus ? 'Aktifkan' : 'Nonaktifkan'} Semua Tema ${targetAngkatan === 'Semua' ? 'Semua Angkatan' : 'Angkatan ' + targetAngkatan}?`,
-        text: `Tindakan ini akan ${actionText.toLowerCase()} seluruh tema yang terdaftar di kelompok ${targetAngkatan}.`,
-        icon: 'warning',
-        showCancelButton: true,
-        confirmButtonColor: newStatus ? '#00A99D' : '#e11d48',
-        confirmButtonText: `Ya, ${newStatus ? 'Aktifkan' : 'Nonaktifkan'} Semua!`
-      });
+      const newStatus = !currentActiveState; const actionText = newStatus ? "MENGAKTIFKAN" : "MENYEMBUNYIKAN/MENONAKTIFKAN";
+      const confirm = await Swal.fire({ title: `${newStatus ? 'Aktifkan' : 'Nonaktifkan'} Semua Tema ${targetAngkatan === 'Semua' ? 'Semua Angkatan' : 'Angkatan ' + escapeHTML(targetAngkatan)}?`, text: `Tindakan ini akan ${actionText.toLowerCase()} seluruh tema yang terdaftar di kelompok ${escapeHTML(targetAngkatan)}.`, icon: 'warning', showCancelButton: true, confirmButtonColor: newStatus ? '#00A99D' : '#e11d48', confirmButtonText: `Ya, ${newStatus ? 'Aktifkan' : 'Nonaktifkan'} Semua!` });
 
       if (confirm.isConfirmed) {
         Swal.fire({ title: 'Memproses Perubahan...', allowOutsideClick: false, didOpen: () => Swal.showLoading() });
         try {
-          let batch = window.fbWriteBatch(window.firebaseDb);
-          let count = 0;
-
+          let batch = window.fbWriteBatch(window.firebaseDb); let count = 0;
           topics.forEach(t => {
             const temaAngkatan = t.angkatan || 'Semua';
             if (targetAngkatan === 'Semua' || temaAngkatan === targetAngkatan) {
-              batch.update(window.fbDoc(window.firebaseDb, "topics", t.id), { isActive: newStatus });
-              count++;
+              batch.update(window.fbDoc(window.firebaseDb, "topics", t.id), { isActive: newStatus }); count++;
             }
           });
-
           await batch.commit();
-          Swal.fire({
-            icon: 'success',
-            title: 'Berhasil Diperbarui!',
-            text: `Total ${count} tema pada ${targetAngkatan === 'Semua' ? 'semua angkatan' : 'angkatan ' + targetAngkatan} telah di-${newStatus ? 'aktifkan' : 'nonaktifkan'}.`,
-            timer: 1500,
-            showConfirmButton: false
-          });
-        } catch (err) {
-          Swal.fire({ icon: 'error', title: 'Gagal Memproses', text: err.message });
-        }
+          Swal.fire({ icon: 'success', title: 'Berhasil Diperbarui!', text: `Total ${count} tema pada ${targetAngkatan === 'Semua' ? 'semua angkatan' : 'angkatan ' + escapeHTML(targetAngkatan)} telah di-${newStatus ? 'aktifkan' : 'nonaktifkan'}.`, timer: 1500, showConfirmButton: false });
+        } catch (err) { Swal.fire({ icon: 'error', title: 'Gagal Memproses', text: err.message }); }
       }
     }
 
-    function selectTopicTab(tabName) {
-      activeTopicTab = tabName;
-      renderTopics();
-    }
+    function selectTopicTab(tabName) { activeTopicTab = tabName; renderTopics(); }
 
     function renderTopics() {
-      const container = document.getElementById('topicCardsContainer');
-      const tabsContainer = document.getElementById('topicAngkatanTabs');
-      if (!container) return;
-      container.innerHTML = '';
+      const container = document.getElementById('topicCardsContainer'); const tabsContainer = document.getElementById('topicAngkatanTabs');
+      if (!container) return; container.innerHTML = '';
 
-      // Tab Dinamis Superadmin + Tombol Disable/Enable Massal Angkatan
       if (tabsContainer) {
         const availableAngkatan = Array.from(new Set(topics.map(t => t.angkatan || 'Semua'))).filter(Boolean);
         let tabItems = ['Semua', ...availableAngkatan.filter(a => a !== 'Semua')];
-        
         let tabHtml = `<div class="flex items-center gap-2 flex-1">`;
         tabItems.forEach(tab => {
           const isActive = activeTopicTab === tab;
-          tabHtml += `
-            <button onclick="selectTopicTab('${tab}')" class="px-4 py-1.5 rounded-lg text-xs font-bold transition shrink-0 ${isActive ? 'bg-brand-500 text-white shadow-sm' : 'bg-slate-100 text-slate-600 hover:bg-slate-200'}">
-              ${tab === 'Semua' ? 'Semua Angkatan' : 'Angkatan ' + tab}
-            </button>
-          `;
+          tabHtml += `<button onclick="selectTopicTab('${escapeForJS(tab)}')" class="px-4 py-1.5 rounded-lg text-xs font-bold transition shrink-0 ${isActive ? 'bg-brand-500 text-white shadow-sm' : 'bg-slate-100 text-slate-600 hover:bg-slate-200'}">${tab === 'Semua' ? 'Semua Angkatan' : 'Angkatan ' + escapeHTML(tab)}</button>`;
         });
         tabHtml += `</div>`;
-
-        // Sisipkan Tombol Kontrol Massal per Angkatan
-        tabHtml += `
-          <div class="flex items-center gap-2 shrink-0 border-l border-slate-200 pl-3">
-            <span class="text-[11px] font-bold text-slate-400 uppercase hidden sm:inline">Aksi Angkatan (${activeTopicTab}):</span>
-            <button onclick="toggleAngkatanStatus('${activeTopicTab}', true)" class="bg-rose-50 hover:bg-rose-100 text-rose-700 border border-rose-200 text-xs font-bold px-3 py-1.5 rounded-lg transition flex items-center gap-1 shadow-sm">
-              <i data-feather="eye-off" class="w-3.5 h-3.5"></i> Disable Semua (${activeTopicTab})
-            </button>
-            <button onclick="toggleAngkatanStatus('${activeTopicTab}', false)" class="bg-emerald-50 hover:bg-emerald-100 text-emerald-700 border border-emerald-200 text-xs font-bold px-3 py-1.5 rounded-lg transition flex items-center gap-1 shadow-sm">
-              <i data-feather="eye" class="w-3.5 h-3.5"></i> Aktifkan Semua (${activeTopicTab})
-            </button>
-          </div>
-        `;
-
+        tabHtml += `<div class="flex items-center gap-2 shrink-0 border-l border-slate-200 pl-3"><span class="text-[11px] font-bold text-slate-400 uppercase hidden sm:inline">Aksi Angkatan (${escapeHTML(activeTopicTab)}):</span><button onclick="toggleAngkatanStatus('${escapeForJS(activeTopicTab)}', true)" class="bg-rose-50 hover:bg-rose-100 text-rose-700 border border-rose-200 text-xs font-bold px-3 py-1.5 rounded-lg transition flex items-center gap-1 shadow-sm"><i data-feather="eye-off" class="w-3.5 h-3.5"></i> Disable Semua</button><button onclick="toggleAngkatanStatus('${escapeForJS(activeTopicTab)}', false)" class="bg-emerald-50 hover:bg-emerald-100 text-emerald-700 border border-emerald-200 text-xs font-bold px-3 py-1.5 rounded-lg transition flex items-center gap-1 shadow-sm"><i data-feather="eye" class="w-3.5 h-3.5"></i> Aktifkan Semua</button></div>`;
         tabsContainer.innerHTML = tabHtml;
       }
 
-      if (topics.length === 0) { 
-        container.innerHTML = `<div class="col-span-2 text-center py-8 text-slate-400 bg-white border rounded-xl">Belum ada master tema.</div>`; 
-        return; 
-      }
+      if (topics.length === 0) { container.innerHTML = `<div class="col-span-2 text-center py-8 text-slate-400 bg-white border rounded-xl">Belum ada master tema.</div>`; return; }
 
       const filteredTopics = topics.filter(t => {
         if (activeTopicTab === 'Semua') return true;
         return (t.angkatan || 'Semua') === activeTopicTab || t.angkatan === 'Semua';
       });
 
-      if (filteredTopics.length === 0) {
-        container.innerHTML = `<div class="col-span-2 text-center py-8 text-slate-400 bg-white border rounded-xl">Tidak ada tema untuk kategori "${activeTopicTab}".</div>`;
-        return;
-      }
+      if (filteredTopics.length === 0) { container.innerHTML = `<div class="col-span-2 text-center py-8 text-slate-400 bg-white border rounded-xl">Tidak ada tema untuk kategori "${escapeHTML(activeTopicTab)}".</div>`; return; }
 
       filteredTopics.forEach(topic => {
-        const topicLecturers = topic.topicLecturers || [];
-        const totalTopicUsed = topic.terisi || 0;
-        const topicMaxQuota = topic.maxQuota || 10;
+        const topicLecturers = topic.topicLecturers || []; const totalTopicUsed = topic.terisi || 0; const topicMaxQuota = topic.maxQuota || 10;
+        const jsTopicId = escapeForJS(topic.id); const jsTopicName = escapeForJS(topic.name);
 
         let lecturersTableRows = '';
         if (topicLecturers.length === 0) { 
           lecturersTableRows = `<tr><td colspan="4" class="text-center py-3 text-slate-400 text-xs">Belum ada dosen pembimbing.</td></tr>`; 
         } else {
           topicLecturers.forEach(tl => {
-            const usedCount = tl.terisi || 0;
-            lecturersTableRows += `
-              <tr class="hover:bg-slate-50 text-xs transition">
-                <td class="py-2.5 px-3 font-semibold text-slate-800">${tl.name}</td>
-                <td class="py-2.5 px-3 text-center font-bold text-slate-700">${tl.quota}</td>
-                <td class="py-2.5 px-3 text-center font-bold ${usedCount >= tl.quota ? 'text-rose-600' : 'text-brand-600'}">${usedCount} terpakai</td>
-                <td class="py-2.5 px-3 text-center space-x-1">
-                  <button onclick="editLecturerQuota('${topic.id}', '${tl.name}', ${tl.quota})" class="text-amber-500 hover:text-amber-700 font-bold transition">Edit</button>
-                  <button onclick="removeLecturerFromTopic('${topic.id}', '${tl.name}')" class="text-rose-500 hover:text-rose-700 font-bold transition">Hapus</button>
-                </td>
-              </tr>
-            `;
+            const usedCount = tl.terisi || 0; const jsLecturerName = escapeForJS(tl.name);
+            lecturersTableRows += `<tr class="hover:bg-slate-50 text-xs transition"><td class="py-2.5 px-3 font-semibold text-slate-800">${escapeHTML(tl.name)}</td><td class="py-2.5 px-3 text-center font-bold text-slate-700">${tl.quota}</td><td class="py-2.5 px-3 text-center font-bold ${usedCount >= tl.quota ? 'text-rose-600' : 'text-brand-600'}">${usedCount} terpakai</td><td class="py-2.5 px-3 text-center space-x-1"><button onclick="editLecturerQuota('${jsTopicId}', '${jsLecturerName}', ${tl.quota})" class="text-amber-500 hover:text-amber-700 font-bold transition">Edit</button><button onclick="removeLecturerFromTopic('${jsTopicId}', '${jsLecturerName}')" class="text-rose-500 hover:text-rose-700 font-bold transition">Hapus</button></td></tr>`;
           });
         }
         
         let dosenOptions = `<option value="">-- Pilih Dosen --</option>`;
-        lecturers.forEach(l => { dosenOptions += `<option value="${l.name}">${l.name}</option>`; });
-        
+        lecturers.forEach(l => { dosenOptions += `<option value="${escapeHTML(l.name)}">${escapeHTML(l.name)}</option>`; });
         const isActive = topic.isActive !== false; 
         
-        container.innerHTML += `
-          <div class="bg-white border ${isActive ? 'border-slate-200' : 'border-slate-300 opacity-60 grayscale-[30%]'} rounded-xl p-5 shadow-sm space-y-4 flex flex-col justify-between transition-all">
-            <div>
-              <div class="flex justify-between items-start border-b pb-3 mb-3">
-                <div>
-                  <h4 class="font-bold text-slate-800 text-lg flex items-center gap-2">
-                    ${topic.name}
-                    <span class="text-[10px] bg-brand-50 text-brand-700 border border-brand-200 px-2 py-0.5 rounded-full font-bold">Target: ${topic.angkatan || 'Semua'}</span>
-                    ${!isActive ? '<span class="text-[9px] bg-slate-200 text-slate-600 px-2 py-0.5 rounded-full uppercase">Disembunyikan</span>' : ''}
-                  </h4>
-                  <p class="text-xs font-semibold mt-1 flex items-center gap-2 ${totalTopicUsed >= topicMaxQuota ? 'text-rose-600' : 'text-slate-500'}">
-                    <span>Kuota Tema: <b>${totalTopicUsed}/${topicMaxQuota} Terisi</b></span>
-                    <button onclick="editTopicQuota('${topic.id}', '${topic.name}', ${topicMaxQuota})" class="bg-slate-100 hover:bg-slate-200 text-slate-600 px-2 py-0.5 rounded text-[10px] font-bold border border-slate-300 transition">Edit Angka</button>
-                  </p>
-                </div>
-                
-                <div class="flex items-center gap-2 shrink-0">
-                  <button onclick="toggleTopicStatus('${topic.id}', ${isActive})" class="px-2 py-1.5 rounded text-[10px] font-bold border transition flex items-center gap-1 ${isActive ? 'bg-emerald-50 text-emerald-700 border-emerald-200 hover:bg-emerald-100' : 'bg-slate-100 text-slate-500 border-slate-300 hover:bg-slate-200'}">
-                    <i data-feather="${isActive ? 'eye' : 'eye-off'}" class="w-3 h-3"></i> ${isActive ? 'AKTIF' : 'NONAKTIF'}
-                  </button>
-                  
-                  <button onclick="removeTopic('${topic.id}')" class="text-xs text-rose-500 hover:text-rose-700 font-bold p-1"><i data-feather="trash-2" class="w-4 h-4"></i></button>
-                </div>
-              </div>
-              
-              <div class="overflow-x-auto border border-slate-100 rounded-lg mb-4">
-                <table class="w-full text-left border-collapse">
-                  <thead><tr class="bg-slate-100/70 text-slate-500 uppercase text-[10px] font-bold"><th class="py-2 px-3">Dosen Pembimbing</th><th class="py-2 px-3 text-center">Kuota</th><th class="py-2 px-3 text-center">Terisi</th><th class="py-2 px-3 text-center">Aksi</th></tr></thead>
-                  <tbody class="divide-y divide-slate-100">${lecturersTableRows}</tbody>
-                </table>
-              </div>
-            </div>
-            
-            <div class="bg-slate-50 p-3 rounded-xl border border-slate-200 space-y-2">
-              <span class="text-[11px] font-bold text-slate-600 uppercase tracking-wider block">+ Tambah Dosen ke Tema Ini</span>
-              <div class="flex flex-col sm:flex-row gap-2">
-                <select id="selectLecturer_${topic.id}" class="flex-1 px-2.5 py-1.5 bg-white border border-slate-300 rounded-lg text-xs">${dosenOptions}</select>
-                <input type="number" id="quotaLecturer_${topic.id}" min="1" placeholder="Kuota" class="w-full sm:w-20 px-2.5 py-1.5 bg-white border border-slate-300 rounded-lg text-xs">
-                <button onclick="addLecturerToTopic('${topic.id}')" class="bg-brand-500 hover:bg-brand-600 text-white text-xs font-bold px-3 py-1.5 rounded-lg shadow-sm">Simpan</button>
-              </div>
-            </div>
-          </div>
-        `;
+        container.innerHTML += `<div class="bg-white border ${isActive ? 'border-slate-200' : 'border-slate-300 opacity-60 grayscale-[30%]'} rounded-xl p-5 shadow-sm space-y-4 flex flex-col justify-between transition-all"><div><div class="flex justify-between items-start border-b pb-3 mb-3"><div><h4 class="font-bold text-slate-800 text-lg flex items-center gap-2">${escapeHTML(topic.name)}<span class="text-[10px] bg-brand-50 text-brand-700 border border-brand-200 px-2 py-0.5 rounded-full font-bold">Target: ${escapeHTML(topic.angkatan || 'Semua')}</span>${!isActive ? '<span class="text-[9px] bg-slate-200 text-slate-600 px-2 py-0.5 rounded-full uppercase">Disembunyikan</span>' : ''}</h4><p class="text-xs font-semibold mt-1 flex items-center gap-2 ${totalTopicUsed >= topicMaxQuota ? 'text-rose-600' : 'text-slate-500'}"><span>Kuota Tema: <b>${totalTopicUsed}/${topicMaxQuota} Terisi</b></span><button onclick="editTopicQuota('${jsTopicId}', '${jsTopicName}', ${topicMaxQuota})" class="bg-slate-100 hover:bg-slate-200 text-slate-600 px-2 py-0.5 rounded text-[10px] font-bold border border-slate-300 transition">Edit Angka</button></p></div><div class="flex items-center gap-2 shrink-0"><button onclick="toggleTopicStatus('${jsTopicId}', ${isActive})" class="px-2 py-1.5 rounded text-[10px] font-bold border transition flex items-center gap-1 ${isActive ? 'bg-emerald-50 text-emerald-700 border-emerald-200 hover:bg-emerald-100' : 'bg-slate-100 text-slate-500 border-slate-300 hover:bg-slate-200'}"><i data-feather="${isActive ? 'eye' : 'eye-off'}" class="w-3 h-3"></i> ${isActive ? 'AKTIF' : 'NONAKTIF'}</button><button onclick="removeTopic('${jsTopicId}')" class="text-xs text-rose-500 hover:text-rose-700 font-bold p-1"><i data-feather="trash-2" class="w-4 h-4"></i></button></div></div><div class="overflow-x-auto border border-slate-100 rounded-lg mb-4"><table class="w-full text-left border-collapse"><thead><tr class="bg-slate-100/70 text-slate-500 uppercase text-[10px] font-bold"><th class="py-2 px-3">Dosen Pembimbing</th><th class="py-2 px-3 text-center">Kuota</th><th class="py-2 px-3 text-center">Terisi</th><th class="py-2 px-3 text-center">Aksi</th></tr></thead><tbody class="divide-y divide-slate-100">${lecturersTableRows}</tbody></table></div></div><div class="bg-slate-50 p-3 rounded-xl border border-slate-200 space-y-2"><span class="text-[11px] font-bold text-slate-600 uppercase tracking-wider block">+ Tambah Dosen ke Tema Ini</span><div class="flex flex-col sm:flex-row gap-2"><select id="selectLecturer_${escapeHTML(topic.id)}" class="flex-1 px-2.5 py-1.5 bg-white border border-slate-300 rounded-lg text-xs">${dosenOptions}</select><input type="number" id="quotaLecturer_${escapeHTML(topic.id)}" min="1" placeholder="Kuota" class="w-full sm:w-20 px-2.5 py-1.5 bg-white border border-slate-300 rounded-lg text-xs"><button onclick="addLecturerToTopic('${jsTopicId}')" class="bg-brand-500 hover:bg-brand-600 text-white text-xs font-bold px-3 py-1.5 rounded-lg shadow-sm">Simpan</button></div></div></div>`;
       });
       feather.replace();
     }
 
     function populateTopicDropdown() {
-      const dropdown = document.getElementById('userTopicDropdown');
-      if (!dropdown) return;
+      const dropdown = document.getElementById('userTopicDropdown'); if (!dropdown) return;
       dropdown.innerHTML = '<option value="">-- Pilih Tema Proposal/Skripsi --</option>';
 
-      // FILTER OTOMATIS BERDASARKAN ANGKATAN MAHASISWA
       const mhsAngkatan = studentProfile.angkatan || '2023';
-
       const activeTopics = topics.filter(t => {
         if (t.isActive === false) return false;
         const temaAngkatan = t.angkatan || 'Semua';
@@ -2030,16 +1553,9 @@
       });
 
       activeTopics.forEach(t => {
-        const totalUsed = t.terisi || 0;
-        const maxQuota = t.maxQuota || 10;
-        const remaining = maxQuota - totalUsed;
-        
-        // Value dropdown diisi ID Unik (t.id) agar tema ber-nama sama tidak bentrok
-        if (remaining > 0) { 
-          dropdown.innerHTML += `<option value="${t.id}">${t.name} - Angkatan ${t.angkatan || 'Semua'} (Sisa Kuota: ${remaining}/${maxQuota})</option>`; 
-        } else { 
-          dropdown.innerHTML += `<option value="${t.id}" disabled class="text-slate-400 bg-slate-100">${t.name} - Angkatan ${t.angkatan || 'Semua'} (PENUH)</option>`; 
-        }
+        const totalUsed = t.terisi || 0; const maxQuota = t.maxQuota || 10; const remaining = maxQuota - totalUsed;
+        if (remaining > 0) { dropdown.innerHTML += `<option value="${escapeHTML(t.id)}">${escapeHTML(t.name)} - Angkatan ${escapeHTML(t.angkatan || 'Semua')} (Sisa Kuota: ${remaining}/${maxQuota})</option>`; } 
+        else { dropdown.innerHTML += `<option value="${escapeHTML(t.id)}" disabled class="text-slate-400 bg-slate-100">${escapeHTML(t.name)} - Angkatan ${escapeHTML(t.angkatan || 'Semua')} (PENUH)</option>`; }
       });
     }
 
@@ -2048,24 +1564,18 @@
       const paDropdown = document.getElementById('userPADropdown');
 
       if (!topicId) { paDropdown.disabled = true; paDropdown.innerHTML = '<option value="">-- Pilih Tema Terlebih Dahulu --</option>'; return; }
-      const selectedTopicObj = topics.find(t => t.id === topicId);
-      const topicLecturers = selectedTopicObj ? (selectedTopicObj.topicLecturers || []) : [];
+      const selectedTopicObj = topics.find(t => t.id === topicId); const topicLecturers = selectedTopicObj ? (selectedTopicObj.topicLecturers || []) : [];
 
       paDropdown.disabled = false; paDropdown.innerHTML = '<option value="">-- Pilih Dosen Pembimbing --</option>';
       topicLecturers.forEach(tl => {
-        const usedCount = tl.terisi || 0;
-        const remaining = tl.quota - usedCount;
-        if (remaining > 0) { paDropdown.innerHTML += `<option value="${tl.name}">${tl.name} (Sisa Kuota Dosen: ${remaining}/${tl.quota})</option>`; } 
-        else { paDropdown.innerHTML += `<option value="${tl.name}" disabled class="text-slate-400 bg-slate-100">${tl.name} (PENUH)</option>`; }
+        const usedCount = tl.terisi || 0; const remaining = tl.quota - usedCount;
+        if (remaining > 0) { paDropdown.innerHTML += `<option value="${escapeHTML(tl.name)}">${escapeHTML(tl.name)} (Sisa Kuota Dosen: ${remaining}/${tl.quota})</option>`; } 
+        else { paDropdown.innerHTML += `<option value="${escapeHTML(tl.name)}" disabled class="text-slate-400 bg-slate-100">${escapeHTML(tl.name)} (PENUH)</option>`; }
       });
     }
 
-    // --- LOGIKA WAR TICKET (ATOMIC TRANSACTION COUNTER - PROTEKSI OVERBOOKING) ---
     async function handleSaveTopicAndDosen() {
-      const topicId = document.getElementById('userTopicDropdown').value;
-      const paVal = document.getElementById('userPADropdown').value;
-      const btn = document.getElementById('btnSubmitTopic');
-
+      const topicId = document.getElementById('userTopicDropdown').value; const paVal = document.getElementById('userPADropdown').value; const btn = document.getElementById('btnSubmitTopic');
       if (!topicId || !paVal) { Swal.fire({ icon: 'warning', title: 'Lengkapi Pilihan', text: 'Pilih Tema dan Dosen Pembimbing terlebih dahulu.' }); return; }
       btn.disabled = true; btn.innerHTML = `<span>Memproses War Transaksi (Validasi Real-time)...</span>`;
 
@@ -2075,458 +1585,237 @@
         await window.fbRunTransaction(window.firebaseDb, async (transaction) => {
           const topicRef = window.fbDoc(window.firebaseDb, "topics", topicId);
           const topicDoc = await transaction.get(topicRef);
-          
           if (!topicDoc.exists()) throw "Master tema tidak ditemukan!";
 
-          const topicData = topicDoc.data();
-          topicNameDisplay = topicData.name;
-          const maxQuota = parseInt(topicData.maxQuota || 10, 10);
-          let currentTopicCount = parseInt(topicData.terisi || 0, 10);
+          const topicData = topicDoc.data(); topicNameDisplay = topicData.name;
+          const maxQuota = parseInt(topicData.maxQuota || 10, 10); let currentTopicCount = parseInt(topicData.terisi || 0, 10);
+          if (currentTopicCount >= maxQuota) { throw `Maaf, kuota total untuk tema "${topicData.name}" baru saja PENUH!`; }
 
-          if (currentTopicCount >= maxQuota) { 
-            throw `Maaf, kuota total untuk tema "${topicData.name}" baru saja PENUH!`; 
-          }
-
-          let lecturersList = topicData.topicLecturers || [];
-          let targetLecturerIdx = lecturersList.findIndex(l => l.name === paVal);
-          
+          let lecturersList = topicData.topicLecturers || []; let targetLecturerIdx = lecturersList.findIndex(l => l.name === paVal);
           if (targetLecturerIdx === -1) throw `Dosen "${paVal}" tidak terdaftar!`;
 
-          let currentLecturerCount = parseInt(lecturersList[targetLecturerIdx].terisi || 0, 10);
-          let lecturerQuota = parseInt(lecturersList[targetLecturerIdx].quota || 0, 10);
+          let currentLecturerCount = parseInt(lecturersList[targetLecturerIdx].terisi || 0, 10); let lecturerQuota = parseInt(lecturersList[targetLecturerIdx].quota || 0, 10);
+          if (currentLecturerCount >= lecturerQuota) { throw `Maaf, kuota pembimbing untuk ${paVal} pada tema "${topicData.name}" baru saja PENUH!`; }
 
-          if (currentLecturerCount >= lecturerQuota) { 
-            throw `Maaf, kuota pembimbing untuk ${paVal} pada tema "${topicData.name}" baru saja PENUH!`; 
-          }
-
-          // ATOMIC COUNTER UPDATE
           lecturersList[targetLecturerIdx].terisi = currentLecturerCount + 1;
-          transaction.update(topicRef, {
-            terisi: currentTopicCount + 1,
-            topicLecturers: lecturersList
-          });
+          transaction.update(topicRef, { terisi: currentTopicCount + 1, topicLecturers: lecturersList });
 
-          // SIMPAN PILIHAN MAHASISWA
           const userRef = window.fbDoc(window.firebaseDb, "students", currentUser.uid);
-          transaction.set(userRef, { 
-            selectedTopic: topicData.name, 
-            selectedPA: paVal, 
-            topicStatus: 'APPROVED' 
-          }, { merge: true });
+          transaction.set(userRef, { selectedTopic: topicData.name, selectedPA: paVal, topicStatus: 'APPROVED' }, { merge: true });
         });
 
-        studentProfile.selectedTopic = topicNameDisplay; 
-        studentProfile.selectedPA = paVal; 
-        studentProfile.topicStatus = 'APPROVED';
-        
-        checkStudentTopicState(); 
-        renderUserDashboard();
+        studentProfile.selectedTopic = topicNameDisplay; studentProfile.selectedPA = paVal; studentProfile.topicStatus = 'APPROVED';
+        checkStudentTopicState(); renderUserDashboard();
 
         let timerInterval;
         Swal.fire({ 
-          icon: 'success', 
-          title: 'BERHASIL KUNCI TEMA! 🎉', 
-          html: `Selamat! Anda memenangkan kuota Tema <b>${topicNameDisplay}</b> dengan Dosen <b>${paVal}</b>.<br><br>
-                 <span class="text-sm text-rose-600 font-bold">Sistem akan mengeluarkan Anda (Logout) secara otomatis dalam <b><span id="countdown">5</span></b> detik...</span>`,
-          confirmButtonColor: '#00A99D',
-          timer: 5000,
-          timerProgressBar: true,
-          allowOutsideClick: false,
-          didOpen: () => {
-            const b = Swal.getHtmlContainer().querySelector('#countdown');
-            timerInterval = setInterval(() => {
-              b.textContent = Math.ceil(Swal.getTimerLeft() / 1000);
-            }, 100);
-          },
-          willClose: () => {
-            clearInterval(timerInterval);
-          }
-        }).then(() => {
-          logout();
-        });
-      } catch (err) {
-        console.error("War Error:", err);
-        Swal.fire({ icon: 'error', title: 'Gagal Kunci Tema', text: (typeof err === 'string') ? err : "Terjadi persaingan kuota di detik yang sama. Silakan coba pilih dosen/tema lain." });
-      } finally {
-        btn.disabled = false; btn.innerHTML = `<span>Kunci & Ajukan Pilihan Tema</span>`;
-      }
+          icon: 'success', title: 'BERHASIL KUNCI TEMA! 🎉', html: `Selamat! Anda memenangkan kuota Tema <b>${escapeHTML(topicNameDisplay)}</b> dengan Dosen <b>${escapeHTML(paVal)}</b>.<br><br><span class="text-sm text-rose-600 font-bold">Sistem akan mengeluarkan Anda (Logout) secara otomatis dalam <b><span id="countdown">5</span></b> detik...</span>`, confirmButtonColor: '#00A99D', timer: 5000, timerProgressBar: true, allowOutsideClick: false,
+          didOpen: () => { const b = Swal.getHtmlContainer().querySelector('#countdown'); timerInterval = setInterval(() => { b.textContent = Math.ceil(Swal.getTimerLeft() / 1000); }, 100); },
+          willClose: () => { clearInterval(timerInterval); }
+        }).then(() => { logout(); });
+      } catch (err) { Swal.fire({ icon: 'error', title: 'Gagal Kunci Tema', text: (typeof err === 'string') ? err : "Terjadi persaingan kuota di detik yang sama. Silakan coba pilih dosen/tema lain." }); } finally { btn.disabled = false; btn.innerHTML = `<span>Kunci & Ajukan Pilihan Tema</span>`; }
     }
 
     function checkStudentTopicState() {
-      const formBox = document.getElementById('topicSelectionContainer');
-      const approvedBox = document.getElementById('topicApprovedMsg');
+      const formBox = document.getElementById('topicSelectionContainer'); const approvedBox = document.getElementById('topicApprovedMsg');
       if (!formBox) return;
 
       if (studentProfile.topicStatus === 'APPROVED' && studentProfile.selectedTopic) {
         formBox.classList.add('hidden'); approvedBox.classList.remove('hidden');
         document.getElementById('topicApprovedName').innerText = studentProfile.selectedTopic;
         document.getElementById('dosenApprovedName').innerText = studentProfile.selectedPA;
-      } else {
-        formBox.classList.remove('hidden'); approvedBox.classList.add('hidden');
-      }
+      } else { formBox.classList.remove('hidden'); approvedBox.classList.add('hidden'); }
     }
 
-    // --- REPOSITORI JUDUL ---
-    async function addRepository(e) {
-      e.preventDefault();
-      const input = document.getElementById('newRepoTitle');
-      const titleVal = input.value.trim();
-      if (titleVal) {
-        const docId = Date.now().toString();
-        await window.fbSetDoc(window.fbDoc(window.firebaseDb, "repositories", docId), { title: titleVal });
-        input.value = '';
-        cachedTitles = [];
-        Swal.fire({ icon: 'success', title: 'Judul Berhasil Ditambahkan!', timer: 1200, showConfirmButton: false });
-      }
+    // Fungsi ganti halaman paginasi khusus Superadmin -> Verifikasi Judul
+    window.changeSubmissionPage = function(page) {
+      currentSubmissionsPage = page;
+      renderSubmissions();
     }
 
-    async function removeRepository(docId) {
-      try {
-        await window.fbDeleteDoc(window.fbDoc(window.firebaseDb, "repositories", docId));
-        cachedTitles = [];
-        Swal.fire({ icon: 'success', title: 'Judul Dihapus!', timer: 1200, showConfirmButton: false });
-      } catch (err) { Swal.fire({ icon: 'error', title: 'Gagal Menghapus', text: err.message }); }
-    }
+    function renderSubmissions() {
+      const tbody = document.getElementById('submissionTableBody'); 
+      const advisorBody = document.getElementById('advisorTableBody');
+      const paginationContainer = document.getElementById('submissionPagination');
 
-    async function clearAllRepositories() {
-      const confirm = await Swal.fire({ title: 'Hapus Semua Master Judul?', text: `Terdapat ${repositories.length} judul di repositori yang akan dibersihkan!`, icon: 'warning', showCancelButton: true, confirmButtonColor: '#e11d48', confirmButtonText: 'Ya, Hapus Semua!' });
-      if (confirm.isConfirmed) {
-        Swal.fire({ title: 'Membersihkan Repositori...', allowOutsideClick: false, didOpen: () => { Swal.showLoading(); }});
-        try {
-          let batch = window.fbWriteBatch(window.firebaseDb); let counter = 0;
-          for (let repo of repositories) {
-            batch.delete(window.fbDoc(window.firebaseDb, "repositories", repo.id)); counter++;
-            if (counter === 450) { await batch.commit(); batch = window.fbWriteBatch(window.firebaseDb); counter = 0; }
+      const sortedSubmissions = [...submissions].sort((a, b) => (b.timestamp || 0) - (a.timestamp || 0));
+
+      // 1. RENDER ADVISOR TABLE (Non-Paginasi, hanya yang terverifikasi)
+      if (advisorBody) {
+        advisorBody.innerHTML = '';
+        sortedSubmissions.forEach(item => {
+          if (item.status === 'VERIFIED') {
+            const safeNama = escapeHTML(item.identitas || item.nama); 
+            const safeNim = escapeHTML(item.nim); 
+            const safePA = escapeHTML(item.dosenPA); 
+            const safeJudul = escapeHTML(item.judul); 
+            const safeTA = escapeHTML(item.dosenTA || 'Belum Diplot');
+            const jsId = escapeForJS(item.id);
+            advisorBody.innerHTML += `<tr class="hover:bg-slate-50"><td class="py-3 px-4 font-bold text-slate-800">${safeNama} (${safeNim})</td><td class="py-3 px-4 text-xs italic">"${safeJudul}"</td><td class="py-3 px-4 text-xs">${safePA}</td><td class="py-3 px-4 text-xs font-semibold text-brand-700">${safeTA}</td><td class="py-3 px-4 text-center"><button onclick="plotAdvisor('${jsId}')" class="bg-brand-500 hover:bg-brand-600 text-white text-xs px-3 py-1.5 font-bold rounded-lg shadow transition">Plot Dosen PA</button></td></tr>`;
           }
-          if (counter > 0) { await batch.commit(); }
-          cachedTitles = [];
-          Swal.fire({ icon: 'success', title: 'Master Repositori Berhasil Dibersihkan!' });
-        } catch (err) { Swal.fire({ icon: 'error', title: 'Gagal Menghapus', text: err.message }); }
+        });
       }
-    }
 
-    async function handleBulkUploadRepositories() {
-      const fileInput = document.getElementById('csvRepoInput');
-      if (!fileInput.files.length) { Swal.fire({ icon: 'warning', title: 'Pilih File', text: 'Silakan pilih file CSV repositori judul terlebih dahulu.' }); return; }
-      const file = fileInput.files[0];
-      const reader = new FileReader();
-
-      reader.onload = async function(e) {
-        const text = e.target.result;
-        const lines = text.split('\n').map(l => l.trim()).filter(l => l.length > 0);
-        if (lines.length < 1) { Swal.fire({ icon: 'error', title: 'File Kosong', text: 'File CSV tidak berisi data.' }); return; }
-
-        let startIdx = 0; if (lines[0].toLowerCase().includes('judul') || lines[0].toLowerCase().includes('title')) { startIdx = 1; }
-        const totalItems = lines.length - startIdx;
-
-        Swal.fire({ title: 'Sedang Mengunggah Judul...', html: `Memproses <b>0</b> dari <b>${totalItems}</b> judul...`, allowOutsideClick: false, didOpen: () => { Swal.showLoading(); }});
-
-        let batch = window.fbWriteBatch(window.firebaseDb); let counter = 0; let successCount = 0;
-        for (let i = startIdx; i < lines.length; i++) {
-          const rawTitle = lines[i].replace(/^["']|["']$/g, '').trim();
-          if (rawTitle) {
-            const docId = (Date.now() + i).toString();
-            batch.set(window.fbDoc(window.firebaseDb, "repositories", docId), { title: rawTitle });
-            counter++; successCount++;
-            if (counter === 450) { await batch.commit(); batch = window.fbWriteBatch(window.firebaseDb); counter = 0; }
-          }
-          Swal.update({ html: `Memproses <b>${successCount}</b> dari <b>${totalItems}</b> judul...` });
-        }
-        if (counter > 0) { await batch.commit(); }
-        cachedTitles = [];
-        Swal.fire({ icon: 'success', title: 'Bulk Upload Repositori Selesai!', text: `Berhasil menambahkan ${successCount} judul baru.` });
-        fileInput.value = '';
-      };
-      reader.readAsText(file);
-    }
-
-    function renderRepositories() {
-      const list = document.getElementById('repoList');
-      if (!list) return;
-      list.innerHTML = '';
-      if (repositories.length === 0) { list.innerHTML = `<li class="py-4 text-center text-slate-400">Belum ada judul di repositori.</li>`; return; }
-
-      const searchKeyword = (document.getElementById('repoSearch')?.value || '').toLowerCase().trim();
-      const filtered = repositories.filter(r => r.title.toLowerCase().includes(searchKeyword));
-
-      filtered.forEach(repo => {
-        list.innerHTML += `
-          <li class="py-3 px-2 flex justify-between items-center hover:bg-slate-50 transition">
-            <span class="text-xs font-medium text-slate-800">${repo.title}</span>
-            <button onclick="removeRepository('${repo.id}')" class="text-xs text-rose-500 hover:text-rose-700 font-semibold shrink-0 ml-4">Hapus</button>
-          </li>
-        `;
-      });
-    }
-
-    function filterRepository() { renderRepositories(); }
-    
-    // --- DASHBOARD USER & PENGAJUAN JUDUL ---
-    function cetakSuratVerifikasi(nama, nim, tema, judul, pembimbingSkripsi, pembimbingAkademik) {
-      const printWindow = window.open('', '_blank');
-      
-      const htmlContent = `
-<!DOCTYPE html>
-<html lang="id">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Surat Verifikasi Judul - ${nama}</title>
-    <style>
-        body {
-            margin: 0;
-            padding: 20px 0;
-            background-color: #525659;
-            display: flex;
-            justify-content: center;
-            font-family: "Times New Roman", Times, serif;
-            font-size: 12pt;
-        }
-
-        .page-a4 {
-            width: 210mm;
-            min-height: 297mm;
-            background-color: white;
-            position: relative;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.5);
-            box-sizing: border-box;
-            display: flex;
-            flex-direction: column;
-        }
-
-        header, footer {
-            width: 100%;
-            margin: 0;
-            padding: 0;
-            text-align: center;
-        }
+      // 2. RENDER VERIFICATION TABLE DENGAN PAGINASI
+      if (tbody) {
+        tbody.innerHTML = '';
         
-        header img, footer img {
-            width: 100%;
-            height: auto;
-            display: block;
-            margin: 0;
+        if (sortedSubmissions.length === 0) { 
+          tbody.innerHTML = `<tr><td colspan="9" class="text-center py-4 text-slate-400">Belum ada pengajuan judul masuk.</td></tr>`; 
+          if(paginationContainer) paginationContainer.innerHTML = '';
+          return; 
         }
 
-        main {
-            flex: 1; 
-            padding: 10mm 20mm; 
-            line-height: 1.5;
-            box-sizing: border-box;
-        }
-
-        .title {
-            text-align: center;
-            font-weight: bold;
-            text-decoration: underline;
-            margin-bottom: 30px;
-            font-size: 14pt;
-        }
-
-        .data-table {
-            width: 100%;
-            margin-bottom: 20px;
-            border-collapse: collapse;
-        }
+        const totalPages = Math.ceil(sortedSubmissions.length / submissionsPerPage) || 1;
+        if (currentSubmissionsPage > totalPages) currentSubmissionsPage = totalPages;
         
-        .data-table td {
-            vertical-align: top;
-            padding: 5px 0;
-        }
-        
-        .label-col {
-            width: 25%;
-        }
-        
-        .colon-col {
-            width: 3%;
-        }
+        const startIdx = (currentSubmissionsPage - 1) * submissionsPerPage;
+        const paginatedSubs = sortedSubmissions.slice(startIdx, startIdx + submissionsPerPage);
 
-        .signature-table {
-            width: 100%;
-            margin-top: 40px;
-            text-align: center;
-            border-collapse: collapse;
-        }
-        
-        .signature-table td {
-            width: 50%;
-            vertical-align: top;
-        }
-        
-        .date-row {
-            text-align: right;
-            padding-right: 10%;
-            margin-bottom: 20px;
-        }
+        paginatedSubs.forEach((item) => {
+          const submissionDate = item.timestamp ? new Date(item.timestamp) : null;
+          const safeTanggal = submissionDate ? submissionDate.toLocaleDateString('id-ID', { day: '2-digit', month: 'short', year: 'numeric' }) : escapeHTML(item.tanggal || '-');
+          const safeWaktu = submissionDate ? submissionDate.toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit', second: '2-digit' }) + ' WIB' : escapeHTML(item.waktu || '-');
+          const safeNama = escapeHTML(item.identitas || item.nama); 
+          const safeNim = escapeHTML(item.nim); 
+          const safeTema = escapeHTML(item.tema); 
+          const safePA = escapeHTML(item.dosenPA); 
+          const safeJudul = escapeHTML(item.judul); 
+          const safeSimilarity = escapeHTML(item.similarity); 
+          const safeAlasan = escapeHTML(item.alasan || '-'); 
+          const jsId = escapeForJS(item.id);
 
-        @media print {
-            body { 
-                background-color: transparent; 
-                padding: 0;
-            }
-            .page-a4 {
-                width: 100%;
-                min-height: 100%;
-                box-shadow: none;
-                margin: 0;
-            }
-            @page {
-                size: A4;
-                margin: 0; 
-            }
-            main {
-                padding: 15mm 25mm; 
-            }
-        }
-    </style>
-</head>
-<body>
+          tbody.innerHTML += `
+            <tr class="hover:bg-slate-50 transition">
+              <td class="py-4 px-4 whitespace-nowrap font-bold text-slate-800 text-xs">${safeTanggal}</td>
+              <td class="py-4 px-4 whitespace-nowrap text-xs text-slate-600">${safeWaktu}</td>
+              <td class="py-4 px-4 font-bold text-slate-900">${safeNama}<br><span class="text-xs font-normal text-slate-500">NIM: ${safeNim}</span></td>
+              <td class="py-4 px-4 font-bold text-brand-700">${safeTema} <br><span class="text-xs text-slate-600 font-semibold">${safePA}</span></td>
+              <td class="py-4 px-4 italic text-xs">"${safeJudul}"</td>
+              <td class="py-4 px-4 text-center font-bold">${safeSimilarity}</td>
+              <td class="py-4 px-4 text-center"><span class="px-2 py-1 rounded text-[10px] font-bold ${item.status === 'VERIFIED' ? 'bg-emerald-100 text-emerald-800' : (item.status === 'REJECTED' ? 'bg-rose-100 text-rose-800' : 'bg-amber-100 text-amber-800')}">${item.status}</span></td>
+              <td class="py-4 px-4 text-xs">${safeAlasan}</td>
+              <td class="py-4 px-4 text-center"><div class="flex flex-col gap-1.5 justify-center"><button onclick="updateStatus('${jsId}', 'VERIFIED')" class="bg-emerald-500 hover:bg-emerald-600 text-white px-2 py-1.5 rounded text-xs font-bold shadow transition">Setujui</button><button onclick="rejectTitle('${jsId}')" class="bg-rose-500 hover:bg-rose-600 text-white px-2 py-1.5 rounded text-xs font-bold shadow transition">Tolak</button></div></td>
+            </tr>
+          `;
+        });
 
-    <div class="page-a4">
-        <header>
-            <img src="https://i.imgur.com/GxSqLoX.png" alt="Kop Surat">
-        </header>
-
-        <main>
-            <div class="title">SURAT KETERANGAN VERIFIKASI JUDUL</div>
-
-            <p>Yang bertanda tangan di bawah ini menerangkan bahwa mahasiswa:</p>
-
-            <table class="data-table">
-                <tr>
-                    <td class="label-col">Nama</td>
-                    <td class="colon-col">:</td>
-                    <td><strong>${nama}</strong></td>
-                </tr>
-                <tr>
-                    <td class="label-col">NIM</td>
-                    <td class="colon-col">:</td>
-                    <td>${nim}</td>
-                </tr>
-                <tr>
-                    <td class="label-col">Program Studi</td>
-                    <td class="colon-col">:</td>
-                    <td>Sarjana Terapan Kebidanan Kediri</td>
-                </tr>
-                <tr>
-                    <td class="label-col">Tema</td>
-                    <td class="colon-col">:</td>
-                    <td><strong>${tema}</strong></td>
-                </tr>
-                <tr>
-                    <td class="label-col">Judul Proposal/Skripsi</td>
-                    <td class="colon-col">:</td>
-                    <td><strong>"${judul}"</strong></td>
-                </tr>
-            </table>
-
-            <p>Menyatakan bahwa judul tersebut telah didiskusikan, diverifikasi, dan <strong>DISETUJUI</strong> untuk dilanjutkan ke tahap penyusunan proposal/skripsi.</p>
-
-            <p>Demikian surat keterangan ini dibuat untuk dapat dipergunakan sebagaimana mestinya.</p>
-
-            <div class="date-row">
-                Kediri, ${new Date().toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric' })}
+        // Tampilkan Kontrol Paginasi
+        if (paginationContainer) {
+          const showingStart = startIdx + 1;
+          const showingEnd = Math.min(startIdx + submissionsPerPage, sortedSubmissions.length);
+          paginationContainer.innerHTML = `
+            <span class="text-xs text-slate-500 font-medium">Menampilkan ${showingStart} - ${showingEnd} dari total ${sortedSubmissions.length} data</span>
+            <div class="flex gap-1.5">
+              <button onclick="changeSubmissionPage(${currentSubmissionsPage - 1})" ${currentSubmissionsPage === 1 ? 'disabled class="px-3 py-1.5 bg-slate-100 text-slate-400 rounded-lg text-xs font-bold cursor-not-allowed"' : 'class="px-3 py-1.5 bg-brand-50 hover:bg-brand-100 text-brand-700 rounded-lg text-xs font-bold transition"'}>Prev</button>
+              <button onclick="changeSubmissionPage(${currentSubmissionsPage + 1})" ${currentSubmissionsPage === totalPages ? 'disabled class="px-3 py-1.5 bg-slate-100 text-slate-400 rounded-lg text-xs font-bold cursor-not-allowed"' : 'class="px-3 py-1.5 bg-brand-50 hover:bg-brand-100 text-brand-700 rounded-lg text-xs font-bold transition"'}>Next</button>
             </div>
-
-            <table class="signature-table">
-                <tr>
-                    <td>Dosen Pembimbing Akademik</td>
-                    <td>Dosen Pembimbing Proposal/Skripsi</td>
-                </tr>
-                <tr>
-                    <td style="padding-top: 90px;">
-                        <strong>${pembimbingAkademik || '(Belum Diplot)'}</strong><br>
-                    </td>
-                    <td style="padding-top: 90px;">
-                        <strong>${pembimbingSkripsi || '(Belum Diplot)'}</strong><br>
-                    </td>
-                </tr>
-            </table>
-        </main>
-
-        <footer>
-            <img src="https://i.imgur.com/FiGPZui.png" alt="Footer">
-        </footer>
-    </div>
-    <script>
-        window.onload = function() {
-            setTimeout(() => { window.print(); }, 500); 
-        };
-    <\/script>
-</body>
-</html>
-      `;
-      
-      printWindow.document.open();
-      printWindow.document.write(htmlContent);
-      printWindow.document.close();
+          `;
+        }
+      }
+      if(window.feather) feather.replace();
     }
 
+    async function rejectTitle(subId) {
+      const { value: alasan } = await Swal.fire({ title: 'Tolak Usulan Judul', input: 'textarea', inputLabel: 'Masukkan alasan penolakan', inputPlaceholder: 'Contoh: Judul terlalu luas, atau mirip dengan repositori...', showCancelButton: true, confirmButtonColor: '#e11d48', confirmButtonText: 'Tolak Judul' });
+      if (alasan) { await window.fbUpdateDoc(window.fbDoc(window.firebaseDb, "submissions", subId), { status: 'REJECTED', alasan: alasan }); Swal.fire({ icon: 'success', title: 'Ditolak!', text: 'Status usulan diubah menjadi Ditolak.', timer: 1500, showConfirmButton: false}); }
+    }
+
+    async function plotAdvisor(subId) {
+      const lecturerOptions = lecturers.reduce((acc, curr) => ({ ...acc, [curr.name]: curr.name }), {});
+      const { value: dosen } = await Swal.fire({ title: 'Pilih Dosen Pembimbing Akademik (PA)', input: 'select', inputOptions: lecturerOptions, inputPlaceholder: 'Pilih Dosen...', showCancelButton: true });
+      if (dosen) {
+        await window.fbUpdateDoc(window.fbDoc(window.firebaseDb, "submissions", subId), { dosenTA: dosen });
+        const targetSub = submissions.find(s => s.id === subId); if (targetSub) targetSub.dosenTA = dosen; renderSubmissions(); Swal.fire({ icon: 'success', title: 'Plotting Berhasil!', timer: 1500, showConfirmButton: false });
+      }
+    }
+
+    async function updateStatus(subId, newStatus) { await window.fbUpdateDoc(window.fbDoc(window.firebaseDb, "submissions", subId), { status: newStatus }); }
+
+    function exportToExcel() {
+      let csvContent = "data:text/csv;charset=utf-8,Nama,NIM,Tema,Judul,Status\n";
+      submissions.forEach(s => { csvContent += `"${escapeHTML(s.nama)}","${escapeHTML(s.nim)}","${escapeHTML(s.tema)}","${escapeHTML(s.judul)}","${escapeHTML(s.status)}"\n`; });
+      const encodedUri = encodeURI(csvContent); const link = document.createElement("a"); link.setAttribute("href", encodedUri); link.setAttribute("download", "rekap_pengajuan_judul.csv"); document.body.appendChild(link); link.click(); document.body.removeChild(link);
+    }
+
+    function switchPage(pageId) {
+      document.querySelectorAll('.page-view').forEach(page => page.classList.add('hidden')); document.getElementById(pageId).classList.remove('hidden');
+      if(pageId === 'page-repository' && repositories.length === 0) { loadRepositoriesData(); }
+    }
+
+    let systemSettings = { isSubmitTitleOpen: false };
+
+    async function toggleSubmitTitleFeature() {
+      const newState = !systemSettings.isSubmitTitleOpen;
+      await window.fbSetDoc(window.fbDoc(window.firebaseDb, "settings", "global"), { isSubmitTitleOpen: newState }, { merge: true });
+      Swal.fire({ icon: 'success', title: newState ? 'Akses DIBUKA' : 'Akses DITUTUP', text: newState ? 'Mahasiswa sekarang bisa mengajukan judul.' : 'Menu pengajuan judul mahasiswa telah dikunci.', timer: 2000, showConfirmButton: false });
+    }
+
+    function updateSubmitTitleUI() {
+      const adminBtn = document.getElementById('adminToggleSubmitBtn'); const navActive = document.getElementById('navBtnSubmitTitleActive'); const navLocked = document.getElementById('navBtnSubmitTitleLocked'); const formView = document.getElementById('submitTitleFormContainer'); const lockedView = document.getElementById('submitTitleLockedMessage'); const mobileSubmitBtn = document.getElementById('mobileNavSubmitBtn'); 
+
+      if (adminBtn) {
+        if (systemSettings.isSubmitTitleOpen) {
+          adminBtn.innerHTML = `<i data-feather="lock" class="w-4 h-4"></i> Tutup Akses Pengajuan`; adminBtn.className = "bg-rose-500 hover:bg-rose-600 text-white text-xs font-bold px-4 py-2 rounded-lg flex items-center gap-2 shadow transition";
+        } else {
+          adminBtn.innerHTML = `<i data-feather="unlock" class="w-4 h-4"></i> Buka Akses Pengajuan`; adminBtn.className = "bg-emerald-500 hover:bg-emerald-600 text-white text-xs font-bold px-4 py-2 rounded-lg flex items-center gap-2 shadow transition";
+        }
+        if (window.feather) feather.replace();
+      }
+
+      if (systemSettings.isSubmitTitleOpen) {
+        if (navActive) navActive.classList.remove('hidden'); if (navLocked) navLocked.classList.add('hidden'); if (formView) formView.classList.remove('hidden'); if (lockedView) lockedView.classList.add('hidden'); if (mobileSubmitBtn) mobileSubmitBtn.classList.remove('hidden'); 
+      } else {
+        if (navActive) navActive.classList.add('hidden'); if (navLocked) navLocked.classList.remove('hidden'); if (formView) formView.classList.add('hidden'); if (lockedView) lockedView.classList.remove('hidden'); if (mobileSubmitBtn) mobileSubmitBtn.classList.add('hidden'); 
+        const submitPage = document.getElementById('page-submit-title'); if (currentUser && currentUser.role === 'user' && submitPage && !submitPage.classList.contains('hidden')) { switchPage('page-dashboard-user'); }
+      }
+    }
+
+    // Merubah Layout Cetak Verifikasi Sesuai Request
+    function cetakSuratVerifikasi(nama, nim, tema, judul, pembimbingSkripsi) {
+      const printWindow = window.open('', '_blank');
+      const htmlContent = `<!DOCTYPE html><html lang="id"><head><meta charset="UTF-8"><title>Surat Verifikasi Judul - ${escapeHTML(nama)}</title><style>body { font-family: "Times New Roman", Times, serif; font-size: 12pt; display: flex; justify-content: center; background-color: #525659; margin: 0; padding: 20px 0; } .page-a4 { width: 210mm; min-height: 297mm; background-color: white; box-sizing: border-box; display: flex; flex-direction: column; } header img, footer img { width: 100%; height: auto; display: block; } main { flex: 1; padding: 10mm 20mm; line-height: 1.5; } .title { text-align: center; font-weight: bold; text-decoration: underline; margin-bottom: 30px; font-size: 14pt; } .data-table { width: 100%; margin-bottom: 20px; border-collapse: collapse; } .data-table td { vertical-align: top; padding: 5px 0; } .label-col { width: 25%; } .colon-col { width: 3%; } .signature-table { width: 100%; margin-top: 40px; text-align: center; border-collapse: collapse; } .signature-table td { width: 50%; vertical-align: top; } .date-row { text-align: right; padding-right: 10%; margin-bottom: 20px; } @media print { body { background-color: transparent; padding: 0; } .page-a4 { width: 100%; margin: 0; box-shadow: none; } @page { size: A4; margin: 0; } main { padding: 15mm 25mm; } }</style></head><body><div class="page-a4"><header><img src="https://i.imgur.com/GxSqLoX.png" alt="Kop Surat"></header><main><div class="title">SURAT KETERANGAN VERIFIKASI JUDUL</div><p>Yang bertanda tangan di bawah ini menerangkan bahwa mahasiswa:</p><table class="data-table"><tr><td class="label-col">Nama</td><td class="colon-col">:</td><td><strong>${escapeHTML(nama)}</strong></td></tr><tr><td class="label-col">NIM</td><td class="colon-col">:</td><td>${escapeHTML(nim)}</td></tr><tr><td class="label-col">Program Studi</td><td class="colon-col">:</td><td>Sarjana Terapan Kebidanan Kediri</td></tr><tr><td class="label-col">Tema</td><td class="colon-col">:</td><td><strong>${escapeHTML(tema)}</strong></td></tr><tr><td class="label-col">Judul Proposal/Skripsi</td><td class="colon-col">:</td><td><strong>"${escapeHTML(judul)}"</strong></td></tr></table><p>Menyatakan bahwa judul tersebut telah didiskusikan, diverifikasi, dan <strong>DISETUJUI</strong> untuk dilanjutkan ke tahap penyusunan proposal/skripsi.</p><p>Demikian surat keterangan ini dibuat untuk dapat dipergunakan sebagaimana mestinya.</p><div class="date-row">Kediri, ${new Date().toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric' })}</div><table class="signature-table"><tr><td>Panitia Skripsi</td><td>Dosen Pembimbing Proposal/Skripsi</td></tr><tr><td style="padding-top: 90px;"><strong>Panitia Skripsi</strong><br></td><td style="padding-top: 90px;"><strong>${escapeHTML(pembimbingSkripsi) || '(Belum Diplot)'}</strong><br></td></tr></table></main><footer><img src="https://i.imgur.com/FiGPZui.png" alt="Footer"></footer></div><script>window.onload = function() { setTimeout(() => { window.print(); }, 500); };<\/script></body></html>`;
+      printWindow.document.open(); printWindow.document.write(htmlContent); printWindow.document.close();
+    }
+
+    // Cabut Syarat Plotting Dosen PA agar mahasiswa langsung bisa cetak saat diverifikasi
     function renderUserDashboard() {
-      const topicDisplay = document.getElementById('userSelectedTopicDisplay');
-      const paDisplay = document.getElementById('userSelectedPADisplay');
-      const topicBadge = document.getElementById('userTopicStatusBadge');
-      const userHistoryBody = document.getElementById('userHistoryTableBody');
+      const topicDisplay = document.getElementById('userSelectedTopicDisplay'); const paDisplay = document.getElementById('userSelectedPADisplay'); const topicBadge = document.getElementById('userTopicStatusBadge'); const userHistoryBody = document.getElementById('userHistoryTableBody');
+      const bannerTitle = document.getElementById('bannerTitle'); const bannerStatusText = document.getElementById('bannerStatusText');
 
-      // PERSONALISASI SALAM BANNER MAHASISWA
-      const bannerTitle = document.getElementById('bannerTitle');
-      const bannerStatusText = document.getElementById('bannerStatusText');
-
-      if (bannerTitle) {
-        const mhsNama = studentProfile.nama || studentProfile.identitas || 'Mahasiswa';
-        bannerTitle.innerText = `Selamat Datang, ${mhsNama}!`;
-      }
-
-      if (bannerStatusText) {
-        bannerStatusText.innerText = studentProfile.topicStatus || 'NONE';
-      }
-
+      if (bannerTitle) { const mhsNama = escapeHTML(studentProfile.nama || studentProfile.identitas || 'Mahasiswa'); bannerTitle.innerText = `Selamat Datang, ${mhsNama}!`; }
+      if (bannerStatusText) bannerStatusText.innerText = escapeHTML(studentProfile.topicStatus || 'NONE');
       if (!topicDisplay) return;
 
-      topicDisplay.innerText = studentProfile.selectedTopic || "Belum Memilih Tema";
-      if (paDisplay) paDisplay.innerText = studentProfile.selectedPA || "Belum Memilih Dosen Tema";
+      topicDisplay.innerText = escapeHTML(studentProfile.selectedTopic || "Belum Memilih Tema");
+      if (paDisplay) paDisplay.innerText = escapeHTML(studentProfile.selectedPA || "Belum Memilih Dosen Tema");
 
       if (topicBadge) {
-        if (studentProfile.topicStatus === 'APPROVED') {
-          topicBadge.innerHTML = `<span class="bg-emerald-100 text-emerald-800 text-xs px-2.5 py-1 rounded-full font-bold">Terkunci Resmi</span>`;
-        } else {
-          topicBadge.innerHTML = `<span class="bg-amber-100 text-amber-800 text-xs px-2.5 py-1 rounded-full font-bold">Belum Dikunci</span>`;
-        }
+        if (studentProfile.topicStatus === 'APPROVED') { topicBadge.innerHTML = `<span class="bg-emerald-100 text-emerald-800 text-xs px-2.5 py-1 rounded-full font-bold">Terkunci Resmi</span>`; } else { topicBadge.innerHTML = `<span class="bg-amber-100 text-amber-800 text-xs px-2.5 py-1 rounded-full font-bold">Belum Dikunci</span>`; }
       }
 
       if (userHistoryBody) {
         userHistoryBody.innerHTML = '';
-        submissions.filter(s => s.nim === studentProfile.nim).forEach(item => {
-          
-          const isReadyToPrint = item.status === 'VERIFIED' && item.dosenTA && item.dosenTA !== '';
-          
-          let btnCetak = '';
-          if (isReadyToPrint) {
-            // Menggunakan escape aman untuk mencegah syntax error pada string kutip
-            const safeNama = (item.nama || item.identitas || '').replace(/'/g, "\\'").replace(/"/g, '&quot;');
-            const safeNim = (item.nim || '').replace(/'/g, "\\'");
-            const safeTema = (item.tema || '').replace(/'/g, "\\'").replace(/"/g, '&quot;');
-            const safeJudul = (item.judul || '').replace(/'/g, "\\'").replace(/"/g, '&quot;');
-            const safeDosenPA = (item.dosenPA || '').replace(/'/g, "\\'").replace(/"/g, '&quot;');
-            const safeDosenTA = (item.dosenTA || '').replace(/'/g, "\\'").replace(/"/g, '&quot;');
+        const userSubs = submissions.filter(s => s.nim === studentProfile.nim).sort((a, b) => (b.timestamp || 0) - (a.timestamp || 0));
 
-            btnCetak = `<br><button onclick="cetakSuratVerifikasi('${safeNama}', '${safeNim}', '${safeTema}', '${safeJudul}', '${safeDosenPA}', '${safeDosenTA}')" class="mt-2 bg-brand-500 hover:bg-brand-600 text-white px-2 py-1.5 rounded text-[10px] font-bold shadow transition flex items-center gap-1 mx-auto"><i data-feather="printer" class="w-3 h-3"></i> Cetak Surat</button>`;
-          } else if (item.status === 'VERIFIED') {
-            btnCetak = `<br><span class="text-[9px] text-amber-600 font-semibold block mt-1">(Menunggu Plotting Dosen PA)</span>`;
+        userSubs.forEach(item => {
+          // [PERBAIKAN BUG] Hapus syarat dosenTA, sekarang murni hanya butuh status VERIFIED
+          const isReadyToPrint = item.status === 'VERIFIED';
+          let btnCetak = '';
+
+          if (isReadyToPrint) {
+            const jsNama = escapeForJS(item.nama || item.identitas || ''); 
+            const jsNim = escapeForJS(item.nim || ''); 
+            const jsTema = escapeForJS(item.tema || ''); 
+            const jsJudul = escapeForJS(item.judul || ''); 
+            const jsDosenPA = escapeForJS(item.dosenPA || ''); // Mengirim Dosen Tema Skripsi saja
+            
+            btnCetak = `<br><button onclick="cetakSuratVerifikasi('${jsNama}', '${jsNim}', '${jsTema}', '${jsJudul}', '${jsDosenPA}')" class="mt-2 bg-brand-500 hover:bg-brand-600 text-white px-2 py-1.5 rounded text-[10px] font-bold shadow transition flex items-center gap-1 mx-auto"><i data-feather="printer" class="w-3 h-3"></i> Cetak Surat</button>`;
           }
           
-          userHistoryBody.innerHTML += `
-            <tr>
-              <td class="py-3 px-4">${item.tanggal}</td>
-              <td class="py-3 px-4 italic font-medium">"${item.judul}"</td>
-              <td class="py-3 px-4 text-center">
-                <span class="bg-brand-100 text-brand-800 px-2 py-1 rounded text-[10px] font-bold">${item.status}</span>
-                ${btnCetak}
-              </td>
-              <td class="py-3 px-4 text-xs">${item.alasan || '-'}</td>
-            </tr>
-          `;
+          const displayWaktu = item.waktu ? escapeHTML(item.waktu) : '-';
+          
+          userHistoryBody.innerHTML += `<tr><td class="py-3 px-4 whitespace-nowrap font-semibold text-slate-800">${escapeHTML(item.tanggal)}</td><td class="py-3 px-4 whitespace-nowrap text-xs text-slate-600">${displayWaktu}</td><td class="py-3 px-4 italic font-medium text-slate-700">"${escapeHTML(item.judul)}"</td><td class="py-3 px-4 text-center"><span class="bg-brand-100 text-brand-800 px-2 py-1 rounded text-[10px] font-bold">${escapeHTML(item.status)}</span>${btnCetak}</td><td class="py-3 px-4 text-xs">${escapeHTML(item.alasan || '-')}</td></tr>`;
         });
         feather.replace();
       }
@@ -2537,195 +1826,40 @@
       const title = document.getElementById('submitTitleInput').value.trim();
       if(!title) return;
 
-      if(studentProfile.topicStatus !== 'APPROVED' || !studentProfile.selectedTopic) {
-         Swal.fire({icon: 'warning', title: 'Akses Ditolak', text: 'Anda harus memilih dan mengunci Tema terlebih dahulu!'});
-         return;
-      }
+      if(studentProfile.topicStatus !== 'APPROVED' || !studentProfile.selectedTopic) { Swal.fire({icon: 'warning', title: 'Akses Ditolak', text: 'Anda harus memilih dan mengunci Tema terlebih dahulu!'}); return; }
 
-      let matchFound = repositories.some(r => r.title.toLowerCase().includes(title.toLowerCase()));
+      const allTitles = await fetchStaticTitles(); 
+      let matchFound = allTitles.some(r => r.toLowerCase().includes(title.toLowerCase()));
       let score = matchFound ? Math.floor(Math.random() * 30) + 70 : Math.floor(Math.random() * 15) + 5;
       
       const docId = Date.now().toString();
+      const now = new Date();
+      const dateStr = now.toLocaleDateString('id-ID', { day: '2-digit', month: 'short', year: 'numeric' });
+      const timeStr = now.toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit', second: '2-digit' }) + ' WIB';
+
       try {
-        await window.fbSetDoc(window.fbDoc(window.firebaseDb, "submissions", docId), {
-           uid: currentUser.uid, nim: studentProfile.nim, nama: studentProfile.nama, identitas: studentProfile.identitas,
-           tema: studentProfile.selectedTopic, dosenPA: studentProfile.selectedPA, judul: title, similarity: score + "%",
-           status: "PENDING", tanggal: new Date().toLocaleDateString('id-ID')
+        await window.fbSetDoc(window.fbDoc(window.firebaseDb, "submissions", docId), { 
+          uid: currentUser.uid, 
+          nim: studentProfile.nim, 
+          nama: studentProfile.nama, 
+          identitas: studentProfile.identitas, 
+          tema: studentProfile.selectedTopic, 
+          dosenPA: studentProfile.selectedPA, 
+          judul: title, 
+          similarity: score + "%", 
+          status: "PENDING", 
+          tanggal: dateStr,
+          waktu: timeStr,
+          timestamp: now.getTime()
         });
-        
-        Swal.fire({icon: 'success', title: 'Berhasil!', text: 'Judul berhasil diajukan.'});
-        document.getElementById('submitTitleInput').value = '';
+        Swal.fire({icon: 'success', title: 'Berhasil!', text: 'Judul berhasil diajukan.'}); 
+        document.getElementById('submitTitleInput').value = ''; 
         switchPage('page-dashboard-user');
-      } catch (err) { Swal.fire({icon: 'error', title: 'Gagal', text: err.message}); }
-    }
-
-    // --- VERIFIKASI JUDUL (ADMIN) & PLOTTING DOSEN AKADEMIK ---
-    function renderSubmissions() {
-      const tbody = document.getElementById('submissionTableBody');
-      const advisorBody = document.getElementById('advisorTableBody');
-      if (!tbody) return;
-      tbody.innerHTML = '';
-      if (advisorBody) advisorBody.innerHTML = '';
-
-      if (submissions.length === 0) {
-        tbody.innerHTML = `<tr><td colspan="7" class="text-center py-4 text-slate-400">Belum ada pengajuan judul masuk.</td></tr>`;
-        return;
-      }
-
-      submissions.forEach((item) => {
-        tbody.innerHTML += `
-          <tr class="hover:bg-slate-50 transition">
-            <td class="py-4 px-4 font-bold text-slate-900">${item.identitas || item.nama}<br><span class="text-xs font-normal text-slate-500">NIM: ${item.nim}</span></td>
-            <td class="py-4 px-4 font-bold text-brand-700">${item.tema} <br><span class="text-xs text-slate-600 font-semibold">${item.dosenPA}</span></td>
-            <td class="py-4 px-4 italic text-xs">"${item.judul}"</td>
-            <td class="py-4 px-4 text-center font-bold">${item.similarity}</td>
-            <td class="py-4 px-4 text-center">
-              <span class="px-2 py-1 rounded text-[10px] font-bold ${item.status === 'VERIFIED' ? 'bg-emerald-100 text-emerald-800' : (item.status === 'REJECTED' ? 'bg-rose-100 text-rose-800' : 'bg-amber-100 text-amber-800')}">
-                ${item.status}
-              </span>
-            </td>
-            <td class="py-4 px-4 text-xs">${item.alasan || '-'}</td>
-            <td class="py-4 px-4 text-center">
-              <div class="flex flex-col gap-1.5 justify-center">
-                <button onclick="updateStatus('${item.id}', 'VERIFIED')" class="bg-emerald-500 hover:bg-emerald-600 text-white px-2 py-1.5 rounded text-xs font-bold shadow transition">Setujui</button>
-                <button onclick="rejectTitle('${item.id}')" class="bg-rose-500 hover:bg-rose-600 text-white px-2 py-1.5 rounded text-xs font-bold shadow transition">Tolak</button>
-              </div>
-            </td>
-          </tr>
-        `;
-
-        if (advisorBody && item.status === 'VERIFIED') {
-          advisorBody.innerHTML += `
-            <tr class="hover:bg-slate-50">
-              <td class="py-3 px-4 font-bold text-slate-800">${item.nama || item.identitas} (${item.nim})</td>
-              <td class="py-3 px-4 text-xs italic">"${item.judul}"</td>
-              <td class="py-3 px-4 text-xs">${item.dosenPA}</td>
-              <td class="py-3 px-4 text-xs font-semibold text-brand-700">${item.dosenTA || 'Belum Diplot'}</td>
-              <td class="py-3 px-4 text-center">
-                <button onclick="plotAdvisor('${item.id}')" class="bg-brand-500 hover:bg-brand-600 text-white text-xs px-3 py-1.5 font-bold rounded-lg shadow transition">Plot Dosen PA</button>
-              </td>
-            </tr>
-          `;
-        }
-      });
-    }
-
-    async function rejectTitle(subId) {
-      const { value: alasan } = await Swal.fire({
-        title: 'Tolak Usulan Judul',
-        input: 'textarea',
-        inputLabel: 'Masukkan alasan penolakan',
-        inputPlaceholder: 'Contoh: Judul terlalu luas, atau mirip dengan repositori...',
-        showCancelButton: true,
-        confirmButtonColor: '#e11d48',
-        confirmButtonText: 'Tolak Judul'
-      });
-
-      if (alasan) {
-        await window.fbUpdateDoc(window.fbDoc(window.firebaseDb, "submissions", subId), { 
-          status: 'REJECTED', 
-          alasan: alasan 
-        });
-        Swal.fire({ icon: 'success', title: 'Ditolak!', text: 'Status usulan diubah menjadi Ditolak.', timer: 1500, showConfirmButton: false});
+      } catch (err) { 
+        Swal.fire({icon: 'error', title: 'Gagal', text: err.message}); 
       }
     }
 
-    async function plotAdvisor(subId) {
-      const lecturerOptions = lecturers.reduce((acc, curr) => ({ ...acc, [curr.name]: curr.name }), {});
-      const { value: dosen } = await Swal.fire({
-        title: 'Pilih Dosen Pembimbing Akademik (PA)',
-        input: 'select',
-        inputOptions: lecturerOptions,
-        inputPlaceholder: 'Pilih Dosen...',
-        showCancelButton: true
-      });
-
-      if (dosen) {
-        await window.fbUpdateDoc(window.fbDoc(window.firebaseDb, "submissions", subId), { dosenTA: dosen });
-        
-        const targetSub = submissions.find(s => s.id === subId);
-        if (targetSub) targetSub.dosenTA = dosen;
-        renderSubmissions();
-
-        Swal.fire({ icon: 'success', title: 'Plotting Berhasil!', timer: 1500, showConfirmButton: false });
-      }
-    }
-
-    async function updateStatus(subId, newStatus) {
-      await window.fbUpdateDoc(window.fbDoc(window.firebaseDb, "submissions", subId), { status: newStatus });
-    }
-
-    function exportToExcel() {
-      let csvContent = "data:text/csv;charset=utf-8,Nama,NIM,Tema,Judul,Status\n";
-      submissions.forEach(s => { csvContent += `"${s.nama}","${s.nim}","${s.tema}","${s.judul}","${s.status}"\n`; });
-      const encodedUri = encodeURI(csvContent); const link = document.createElement("a");
-      link.setAttribute("href", encodedUri); link.setAttribute("download", "rekap_pengajuan_judul.csv");
-      document.body.appendChild(link); link.click(); document.body.removeChild(link);
-    }
-
-    function switchPage(pageId) {
-      document.querySelectorAll('.page-view').forEach(page => page.classList.add('hidden'));
-      document.getElementById(pageId).classList.remove('hidden');
-    }
-
-    let systemSettings = { isSubmitTitleOpen: false };
-
-    async function toggleSubmitTitleFeature() {
-      const newState = !systemSettings.isSubmitTitleOpen;
-      await window.fbSetDoc(window.fbDoc(window.firebaseDb, "settings", "global"), {
-        isSubmitTitleOpen: newState
-      }, { merge: true });
-      
-      Swal.fire({
-        icon: 'success',
-        title: newState ? 'Akses DIBUKA' : 'Akses DITUTUP',
-        text: newState ? 'Mahasiswa sekarang bisa mengajukan judul.' : 'Menu pengajuan judul mahasiswa telah dikunci.',
-        timer: 2000,
-        showConfirmButton: false
-      });
-    }
-
-    function updateSubmitTitleUI() {
-      const adminBtn = document.getElementById('adminToggleSubmitBtn');
-      const navActive = document.getElementById('navBtnSubmitTitleActive');
-      const navLocked = document.getElementById('navBtnSubmitTitleLocked');
-      const formView = document.getElementById('submitTitleFormContainer');
-      const lockedView = document.getElementById('submitTitleLockedMessage');
-      
-      const mobileSubmitBtn = document.getElementById('mobileNavSubmitBtn'); 
-
-      if (adminBtn) {
-        if (systemSettings.isSubmitTitleOpen) {
-          adminBtn.innerHTML = `<i data-feather="lock" class="w-4 h-4"></i> Tutup Akses Pengajuan`;
-          adminBtn.className = "bg-rose-500 hover:bg-rose-600 text-white text-xs font-bold px-4 py-2 rounded-lg flex items-center gap-2 shadow transition";
-        } else {
-          adminBtn.innerHTML = `<i data-feather="unlock" class="w-4 h-4"></i> Buka Akses Pengajuan`;
-          adminBtn.className = "bg-emerald-500 hover:bg-emerald-600 text-white text-xs font-bold px-4 py-2 rounded-lg flex items-center gap-2 shadow transition";
-        }
-        if (window.feather) feather.replace();
-      }
-
-      if (systemSettings.isSubmitTitleOpen) {
-        if (navActive) navActive.classList.remove('hidden');
-        if (navLocked) navLocked.classList.add('hidden');
-        if (formView) formView.classList.remove('hidden');
-        if (lockedView) lockedView.classList.add('hidden');
-        
-        if (mobileSubmitBtn) mobileSubmitBtn.classList.remove('hidden'); 
-      } else {
-        if (navActive) navActive.classList.add('hidden');
-        if (navLocked) navLocked.classList.remove('hidden');
-        if (formView) formView.add('hidden');
-        if (lockedView) lockedView.classList.remove('hidden');
-        
-        if (mobileSubmitBtn) mobileSubmitBtn.classList.add('hidden'); 
-        
-        const submitPage = document.getElementById('page-submit-title');
-        if (currentUser && currentUser.role === 'user' && submitPage && !submitPage.classList.contains('hidden')) {
-          switchPage('page-dashboard-user');
-        }
-      }
-    }
   </script>
 </body>
 </html>
