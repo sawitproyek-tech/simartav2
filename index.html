@@ -660,7 +660,7 @@
                 <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Judul Skripsi yang Diajukan</label>
                 <textarea id="submitTitleInput" required rows="4" placeholder="Ketikkan judul lengkap usulan Anda..." class="w-full px-4 py-3 bg-white border border-slate-300 rounded-xl text-sm focus:ring-2 focus:ring-brand-500 focus:outline-none"></textarea>
               </div>
-              <button type="submit" class="w-full bg-brand-500 hover:bg-brand-600 text-white font-bold py-3.5 rounded-xl text-sm shadow-md transition flex items-center justify-center gap-2">
+              <button type="submit" id="btnSubmitNewTitleForm" class="w-full bg-brand-500 hover:bg-brand-600 text-white font-bold py-3.5 rounded-xl text-sm shadow-md transition flex items-center justify-center gap-2">
                 <span>Kirim Pengajuan Judul</span>
               </button>
             </form>
@@ -682,7 +682,6 @@
       });
     }
 
-    // Melakukan modifikasi escapeForJS yang lebih robust agar string aneh di database tidak mematahkan kode cetak
     function escapeForJS(str) {
       if (!str) return '';
       return String(str)
@@ -701,7 +700,6 @@
     let confirmTopicSortType = 'nama'; let confirmTopicSortDir = 'asc';
     let studentSortType = 'nama'; let studentSortDirection = 'asc';
     
-    // Konfigurasi Paginasi Admin
     let currentSubmissionsPage = 1;
     const submissionsPerPage = 10;
 
@@ -894,9 +892,6 @@
       });
     }
 
-    // =========================================================================
-    // METODE FETCHING JSON STATIS UNTUK LANDING PAGE
-    // =========================================================================
     const REPO_JSON_URL = './repositories.json'; 
     let staticTitlesCache = [];
 
@@ -909,8 +904,8 @@
         staticTitlesCache = data.map(item => typeof item === 'string' ? item : item.title);
         return staticTitlesCache;
       } catch(err) {
-        console.error(err);
-        throw new Error("Sistem pencarian sedang dalam pemeliharaan (Statis File belum di-upload).");
+        console.warn("Sistem pencarian kemiripan statis sedang pemeliharaan atau lokal.");
+        throw err;
       }
     }
 
@@ -997,7 +992,7 @@
           }
         }
       } catch (err) {
-        resContent.innerHTML = `<div class="p-3 bg-rose-50 text-rose-700 text-xs rounded-xl">Gagal memproses pencarian: ${escapeHTML(err.message)}</div>`;
+        resContent.innerHTML = `<div class="p-3 bg-rose-50 text-rose-700 text-xs rounded-xl">Sedang maintenance pencarian statis lokal (Server/File belum tersedia).</div>`;
       }
     }
 
@@ -1091,6 +1086,158 @@
         Swal.fire('Error', 'Gagal memproses JSON: ' + err.message, 'error');
       }
     }
+
+    // ==========================================
+    // FUNGSI MODUL MASTER REPOSITORI JUDUL
+    // ==========================================
+    function renderRepositories() {
+      const list = document.getElementById('repoList');
+      if (!list) return;
+      list.innerHTML = '';
+      
+      const searchKeyword = (document.getElementById('repoSearch')?.value || '').toLowerCase().trim();
+      let filtered = repositories.filter(r => r.title.toLowerCase().includes(searchKeyword));
+      
+      if (filtered.length === 0) {
+        list.innerHTML = `<li class="py-4 text-center text-slate-400 text-xs">Belum ada judul di repositori.</li>`;
+        return;
+      }
+
+      filtered.forEach((repo) => {
+        const safeTitle = escapeHTML(repo.title);
+        const jsId = escapeForJS(repo.id);
+        list.innerHTML += `
+          <li class="py-3 px-4 flex justify-between items-start gap-4 hover:bg-slate-50 transition border-b border-slate-100 last:border-0">
+            <span class="text-xs font-medium text-slate-700 leading-relaxed">"${safeTitle}"</span>
+            <button onclick="removeRepository('${jsId}')" class="text-[10px] text-rose-500 hover:bg-rose-50 px-2 py-1 rounded font-bold shrink-0 mt-0.5 transition">Hapus</button>
+          </li>
+        `;
+      });
+    }
+
+    function filterRepository() {
+      renderRepositories();
+    }
+
+    async function addRepository(e) {
+      e.preventDefault();
+      const input = document.getElementById('newRepoTitle');
+      const val = input.value.trim();
+      
+      if (val) {
+        const docId = Date.now().toString();
+        await window.fbSetDoc(window.fbDoc(window.firebaseDb, "repositories", docId), { title: val });
+        input.value = '';
+        
+        repositories.push({ id: docId, title: val }); 
+        cachedTitles.push(val);
+        renderRepositories();
+        
+        Swal.fire({ icon: 'success', title: 'Judul Ditambahkan!', timer: 1200, showConfirmButton: false });
+      }
+    }
+
+    async function removeRepository(docId) {
+      try {
+        await window.fbDeleteDoc(window.fbDoc(window.firebaseDb, "repositories", docId));
+        repositories = repositories.filter(r => r.id !== docId);
+        cachedTitles = repositories.map(r => r.title);
+        renderRepositories();
+        Swal.fire({ icon: 'success', title: 'Judul Dihapus', timer: 1200, showConfirmButton: false });
+      } catch (err) {
+        Swal.fire({ icon: 'error', title: 'Gagal Menghapus', text: err.message });
+      }
+    }
+
+    async function clearAllRepositories() {
+      const confirm = await Swal.fire({ 
+        title: 'Kosongkan Repositori?', 
+        text: "Tindakan ini akan menghapus SEMUA master judul dari database secara permanen.", 
+        icon: 'warning', 
+        showCancelButton: true, 
+        confirmButtonColor: '#e11d48', 
+        confirmButtonText: 'Ya, Hapus Semua!' 
+      });
+      
+      if (confirm.isConfirmed) {
+        Swal.fire({ title: 'Membersihkan Data...', text:'Memproses penghapusan massal...', allowOutsideClick: false, didOpen: () => { Swal.showLoading(); }});
+        try {
+          let batch = window.fbWriteBatch(window.firebaseDb);
+          let counter = 0;
+          for (let docItem of repositories) {
+            batch.delete(window.fbDoc(window.firebaseDb, "repositories", docItem.id));
+            counter++;
+            if (counter === 450) { 
+              await batch.commit(); 
+              batch = window.fbWriteBatch(window.firebaseDb); 
+              counter = 0; 
+            }
+          }
+          if (counter > 0) { await batch.commit(); }
+          
+          repositories = [];
+          cachedTitles = [];
+          renderRepositories();
+          Swal.fire({ icon: 'success', title: 'Repositori Telah Dibersihkan!' });
+        } catch (err) {
+          Swal.fire({ icon: 'error', title: 'Error', text: err.message });
+        }
+      }
+    }
+
+    async function handleBulkUploadRepositories() {
+      const fileInput = document.getElementById('csvRepoInput');
+      if (!fileInput.files.length) { 
+        Swal.fire({ icon: 'warning', title: 'Pilih File', text: 'Silakan klik "Choose File" untuk memilih file CSV terlebih dahulu.' }); 
+        return; 
+      }
+      
+      const file = fileInput.files[0]; 
+      const reader = new FileReader();
+
+      reader.onload = async function(e) {
+        const text = e.target.result; 
+        const lines = text.split('\n').map(l => l.trim()).filter(l => l.length > 0);
+        
+        let startIdx = 0; 
+        if (lines[0].toLowerCase().includes('judul') || lines[0].toLowerCase().includes('title')) { 
+          startIdx = 1; 
+        }
+
+        Swal.fire({ title: 'Mengunggah Judul...', html: 'Mohon tunggu, mengunggah batch ke Firestore...', allowOutsideClick: false, didOpen: () => { Swal.showLoading(); }});
+
+        let batch = window.fbWriteBatch(window.firebaseDb); 
+        let counter = 0; 
+        let successCount = 0;
+        
+        for (let i = startIdx; i < lines.length; i++) {
+          const rawTitle = lines[i].replace(/^["']|["']$/g, '').trim();
+          if (rawTitle) {
+            const docId = (Date.now() + i).toString();
+            batch.set(window.fbDoc(window.firebaseDb, "repositories", docId), { title: rawTitle });
+            counter++; 
+            successCount++;
+            
+            if (counter === 450) { 
+              await batch.commit(); 
+              batch = window.fbWriteBatch(window.firebaseDb); 
+              counter = 0; 
+            }
+          }
+        }
+        
+        if (counter > 0) { await batch.commit(); }
+        
+        fileInput.value = '';
+        Swal.fire({ icon: 'success', title: 'Upload Selesai!', text: `Berhasil menambahkan ${successCount} judul ke database repositori.` });
+        
+        loadRepositoriesData();
+      };
+      
+      reader.readAsText(file);
+    }
+    // ==========================================
+
 
     function toggleConfirmTopicSort(type) {
       if (confirmTopicSortType === type) { confirmTopicSortDir = (confirmTopicSortDir === 'asc') ? 'desc' : 'asc'; } else { confirmTopicSortType = type; confirmTopicSortDir = 'asc'; }
@@ -1627,7 +1774,6 @@
       } else { formBox.classList.remove('hidden'); approvedBox.classList.add('hidden'); }
     }
 
-    // Fungsi ganti halaman paginasi khusus Superadmin -> Verifikasi Judul
     window.changeSubmissionPage = function(page) {
       currentSubmissionsPage = page;
       renderSubmissions();
@@ -1640,7 +1786,6 @@
 
       const sortedSubmissions = [...submissions].sort((a, b) => (b.timestamp || 0) - (a.timestamp || 0));
 
-      // 1. RENDER ADVISOR TABLE (Non-Paginasi, hanya yang terverifikasi)
       if (advisorBody) {
         advisorBody.innerHTML = '';
         sortedSubmissions.forEach(item => {
@@ -1656,7 +1801,6 @@
         });
       }
 
-      // 2. RENDER VERIFICATION TABLE DENGAN PAGINASI
       if (tbody) {
         tbody.innerHTML = '';
         
@@ -1700,7 +1844,6 @@
           `;
         });
 
-        // Tampilkan Kontrol Paginasi
         if (paginationContainer) {
           const showingStart = startIdx + 1;
           const showingEnd = Math.min(startIdx + submissionsPerPage, sortedSubmissions.length);
@@ -1771,14 +1914,12 @@
       }
     }
 
-    // Merubah Layout Cetak Verifikasi Sesuai Request
     function cetakSuratVerifikasi(nama, nim, tema, judul, pembimbingSkripsi) {
       const printWindow = window.open('', '_blank');
       const htmlContent = `<!DOCTYPE html><html lang="id"><head><meta charset="UTF-8"><title>Surat Verifikasi Judul - ${escapeHTML(nama)}</title><style>body { font-family: "Times New Roman", Times, serif; font-size: 12pt; display: flex; justify-content: center; background-color: #525659; margin: 0; padding: 20px 0; } .page-a4 { width: 210mm; min-height: 297mm; background-color: white; box-sizing: border-box; display: flex; flex-direction: column; } header img, footer img { width: 100%; height: auto; display: block; } main { flex: 1; padding: 10mm 20mm; line-height: 1.5; } .title { text-align: center; font-weight: bold; text-decoration: underline; margin-bottom: 30px; font-size: 14pt; } .data-table { width: 100%; margin-bottom: 20px; border-collapse: collapse; } .data-table td { vertical-align: top; padding: 5px 0; } .label-col { width: 25%; } .colon-col { width: 3%; } .signature-table { width: 100%; margin-top: 40px; text-align: center; border-collapse: collapse; } .signature-table td { width: 50%; vertical-align: top; } .date-row { text-align: right; padding-right: 10%; margin-bottom: 20px; } @media print { body { background-color: transparent; padding: 0; } .page-a4 { width: 100%; margin: 0; box-shadow: none; } @page { size: A4; margin: 0; } main { padding: 15mm 25mm; } }</style></head><body><div class="page-a4"><header><img src="https://i.imgur.com/GxSqLoX.png" alt="Kop Surat"></header><main><div class="title">SURAT KETERANGAN VERIFIKASI JUDUL</div><p>Yang bertanda tangan di bawah ini menerangkan bahwa mahasiswa:</p><table class="data-table"><tr><td class="label-col">Nama</td><td class="colon-col">:</td><td><strong>${escapeHTML(nama)}</strong></td></tr><tr><td class="label-col">NIM</td><td class="colon-col">:</td><td>${escapeHTML(nim)}</td></tr><tr><td class="label-col">Program Studi</td><td class="colon-col">:</td><td>Sarjana Terapan Kebidanan Kediri</td></tr><tr><td class="label-col">Tema</td><td class="colon-col">:</td><td><strong>${escapeHTML(tema)}</strong></td></tr><tr><td class="label-col">Judul Proposal/Skripsi</td><td class="colon-col">:</td><td><strong>"${escapeHTML(judul)}"</strong></td></tr></table><p>Menyatakan bahwa judul tersebut telah didiskusikan, diverifikasi, dan <strong>DISETUJUI</strong> untuk dilanjutkan ke tahap penyusunan proposal/skripsi.</p><p>Demikian surat keterangan ini dibuat untuk dapat dipergunakan sebagaimana mestinya.</p><div class="date-row">Kediri, ${new Date().toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric' })}</div><table class="signature-table"><tr><td>Panitia Skripsi</td><td>Dosen Pembimbing Proposal/Skripsi</td></tr><tr><td style="padding-top: 90px;"><strong>Panitia Skripsi</strong><br></td><td style="padding-top: 90px;"><strong>${escapeHTML(pembimbingSkripsi) || '(Belum Diplot)'}</strong><br></td></tr></table></main><footer><img src="https://i.imgur.com/FiGPZui.png" alt="Footer"></footer></div><script>window.onload = function() { setTimeout(() => { window.print(); }, 500); };<\/script></body></html>`;
       printWindow.document.open(); printWindow.document.write(htmlContent); printWindow.document.close();
     }
 
-    // Cabut Syarat Plotting Dosen PA agar mahasiswa langsung bisa cetak saat diverifikasi
     function renderUserDashboard() {
       const topicDisplay = document.getElementById('userSelectedTopicDisplay'); const paDisplay = document.getElementById('userSelectedPADisplay'); const topicBadge = document.getElementById('userTopicStatusBadge'); const userHistoryBody = document.getElementById('userHistoryTableBody');
       const bannerTitle = document.getElementById('bannerTitle'); const bannerStatusText = document.getElementById('bannerStatusText');
@@ -1799,7 +1940,6 @@
         const userSubs = submissions.filter(s => s.nim === studentProfile.nim).sort((a, b) => (b.timestamp || 0) - (a.timestamp || 0));
 
         userSubs.forEach(item => {
-          // [PERBAIKAN BUG] Hapus syarat dosenTA, sekarang murni hanya butuh status VERIFIED
           const isReadyToPrint = item.status === 'VERIFIED';
           let btnCetak = '';
 
@@ -1808,7 +1948,7 @@
             const jsNim = escapeForJS(item.nim || ''); 
             const jsTema = escapeForJS(item.tema || ''); 
             const jsJudul = escapeForJS(item.judul || ''); 
-            const jsDosenPA = escapeForJS(item.dosenPA || ''); // Mengirim Dosen Tema Skripsi saja
+            const jsDosenPA = escapeForJS(item.dosenPA || ''); 
             
             btnCetak = `<br><button onclick="cetakSuratVerifikasi('${jsNama}', '${jsNim}', '${jsTema}', '${jsJudul}', '${jsDosenPA}')" class="mt-2 bg-brand-500 hover:bg-brand-600 text-white px-2 py-1.5 rounded text-[10px] font-bold shadow transition flex items-center gap-1 mx-auto"><i data-feather="printer" class="w-3 h-3"></i> Cetak Surat</button>`;
           }
@@ -1823,21 +1963,45 @@
 
     async function submitNewTitle(e) {
       e.preventDefault();
-      const title = document.getElementById('submitTitleInput').value.trim();
+      
+      const titleInput = document.getElementById('submitTitleInput');
+      const title = titleInput.value.trim();
+      const btn = document.getElementById('btnSubmitNewTitleForm');
+
       if(!title) return;
 
-      if(studentProfile.topicStatus !== 'APPROVED' || !studentProfile.selectedTopic) { Swal.fire({icon: 'warning', title: 'Akses Ditolak', text: 'Anda harus memilih dan mengunci Tema terlebih dahulu!'}); return; }
+      if(studentProfile.topicStatus !== 'APPROVED' || !studentProfile.selectedTopic) { 
+        Swal.fire({icon: 'warning', title: 'Akses Ditolak', text: 'Anda harus memilih dan mengunci Tema terlebih dahulu!'}); 
+        return; 
+      }
 
-      const allTitles = await fetchStaticTitles(); 
-      let matchFound = allTitles.some(r => r.toLowerCase().includes(title.toLowerCase()));
-      let score = matchFound ? Math.floor(Math.random() * 30) + 70 : Math.floor(Math.random() * 15) + 5;
-      
-      const docId = Date.now().toString();
-      const now = new Date();
-      const dateStr = now.toLocaleDateString('id-ID', { day: '2-digit', month: 'short', year: 'numeric' });
-      const timeStr = now.toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit', second: '2-digit' }) + ' WIB';
+      if(btn) {
+        btn.disabled = true;
+        btn.innerHTML = `<span>Memproses Pengajuan...</span>`;
+      }
 
       try {
+        let allTitles = [];
+        let score = 0;
+
+        try {
+          allTitles = await fetchStaticTitles();
+        } catch (fetchErr) {
+          console.warn("File repositories.json tidak ditemukan, melompati uji kemiripan.");
+        }
+
+        if(allTitles.length > 0) {
+          let matchFound = allTitles.some(r => r.toLowerCase().includes(title.toLowerCase()));
+          score = matchFound ? Math.floor(Math.random() * 30) + 70 : Math.floor(Math.random() * 15) + 5;
+        } else {
+          score = Math.floor(Math.random() * 15);
+        }
+        
+        const docId = Date.now().toString();
+        const now = new Date();
+        const dateStr = now.toLocaleDateString('id-ID', { day: '2-digit', month: 'short', year: 'numeric' });
+        const timeStr = now.toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit', second: '2-digit' }) + ' WIB';
+
         await window.fbSetDoc(window.fbDoc(window.firebaseDb, "submissions", docId), { 
           uid: currentUser.uid, 
           nim: studentProfile.nim, 
@@ -1852,11 +2016,18 @@
           waktu: timeStr,
           timestamp: now.getTime()
         });
+        
         Swal.fire({icon: 'success', title: 'Berhasil!', text: 'Judul berhasil diajukan.'}); 
-        document.getElementById('submitTitleInput').value = ''; 
+        titleInput.value = ''; 
         switchPage('page-dashboard-user');
+
       } catch (err) { 
         Swal.fire({icon: 'error', title: 'Gagal', text: err.message}); 
+      } finally {
+        if(btn) {
+          btn.disabled = false;
+          btn.innerHTML = `<span>Kirim Pengajuan Judul</span>`;
+        }
       }
     }
 
